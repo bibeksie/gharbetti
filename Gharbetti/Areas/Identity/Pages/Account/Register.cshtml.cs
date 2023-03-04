@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -16,7 +17,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -110,32 +113,59 @@ namespace Gharbetti.Areas.Identity.Pages.Account
 
             [Required]
             public string FirstName { get; set; }
+
             public string? MiddleName { get; set; }
             [Required]
             public string LastName { get; set; }
             [Required]
             public string MobileNumber { get; set; }
+
             public string PhoneNumber { get; set; }
+
             [Required]
+            [DataType(DataType.Date)]
             public DateTime Dob { get; set; }
+
             public string? Identification { get; set; }
+
             public string? PhotoId { get; set; }
+
             public byte Status { get; set; }
+
             [Required]
             public string AddressLine1 { get; set; }
+
             public string? AddressLine2 { get; set; }
+
             public string? AddressLine3 { get; set; }
+
             [Required]
             public string City { get; set; }
+
             [Required]
             public string PostalCode { get; set; }
+
             public string? County { get; set; }
+
             [Required]
             public string Country { get; set; }
+
+
             [BindProperty]
+            [Required(ErrorMessage = "Please select a file.")]
+            [DataType(DataType.Upload)]
             public IFormFile IdentificationFile { get; set; }
+
+
             [BindProperty]
+            [Required(ErrorMessage = "Please select a file.")]
+            [DataType(DataType.Upload)]
+            [MaxFileSize(5 * 1024 * 1024)]
+            [AllowedExtensions(new string[] { ".jpg", ".png" })]
             public IFormFile PhotoFile { get; set; }
+
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CountryList { get; set; }
         }
 
 
@@ -144,10 +174,21 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             if (!await _roleManager.RoleExistsAsync(StaticDetail.Role_Admin))
             {
                 await _roleManager.CreateAsync(new IdentityRole(StaticDetail.Role_Admin));
+                await _roleManager.CreateAsync(new IdentityRole(StaticDetail.Role_PendingTenant));
                 await _roleManager.CreateAsync(new IdentityRole(StaticDetail.Role_Tenant));
             }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            Input = new InputModel()
+            {
+                CountryList = GetCountryList().Select(x => new SelectListItem
+                {
+                    Text = x,
+                    Value = x
+                })
+            };
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -159,14 +200,14 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 var dateTimeTick = DateTime.Now.Ticks.ToString();
 
                 var tickIdentification = $"{dateTimeTick}1";
-                var file1 = Path.Combine(_environment.ContentRootPath, "uploads", tickIdentification);
+                var file1 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickIdentification}.{Input.IdentificationFile.FileName.Split(".")[1]}");
                 using (var fileStream = new FileStream(file1, FileMode.Create))
                 {
                     await Input.IdentificationFile.CopyToAsync(fileStream);
                 }
 
                 var tickPhotoFile = $"{dateTimeTick}2";
-                var file2 = Path.Combine(_environment.ContentRootPath, "uploads", tickPhotoFile);
+                var file2 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickPhotoFile}.{Input.IdentificationFile.FileName.Split(".")[1]}");
                 using (var fileStream = new FileStream(file2, FileMode.Create))
                 {
                     await Input.PhotoFile.CopyToAsync(fileStream);
@@ -181,15 +222,14 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 user.MiddleName = Input.MiddleName;
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
-                user.AddressLine1= Input.AddressLine1;
-                user.AddressLine2= Input.AddressLine2;
+                user.AddressLine1 = Input.AddressLine1;
+                user.AddressLine2 = Input.AddressLine2;
                 user.AddressLine3 = Input.AddressLine3;
-                user.Status = StaticDetail.Status_Pending;
                 user.City = Input.City;
                 user.PostalCode = Input.PostalCode;
                 user.Country = Input.Country;
-                user.County= Input.County;
-                user.MobileNumber= Input.MobileNumber;
+                user.County = Input.County;
+                user.MobileNumber = Input.MobileNumber;
                 user.Identification = tickIdentification;
                 user.PhotoId = tickPhotoFile;
 
@@ -202,27 +242,31 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    await _userManager.AddToRoleAsync(user, StaticDetail.Role_PendingTenant);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    return RedirectToAction("Index", "Home");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    //var userId = await _userManager.GetUserIdAsync(user);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                    //    protocol: Request.Scheme);
+
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //{
+                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    //}
+                    //else
+                    //{
+                    //    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //    return LocalRedirect(returnUrl);
+                    //}
                 }
                 foreach (var error in result.Errors)
                 {
@@ -255,6 +299,83 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<IdentityUser>)_userStore;
+        }
+
+        public static List<string> GetCountryList()
+        {
+            List<string> cultureList = new List<string>();
+
+            CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+
+            foreach (CultureInfo culture in cultures)
+            {
+                RegionInfo region = new RegionInfo(culture.LCID);
+
+                if (!(cultureList.Contains(region.EnglishName)))
+                {
+                    cultureList.Add(region.EnglishName);
+                }
+            }
+            return cultureList;
+        }
+
+        public class MaxFileSizeAttribute : ValidationAttribute
+        {
+            private readonly int _maxFileSize;
+            public MaxFileSizeAttribute(int maxFileSize)
+            {
+                _maxFileSize = maxFileSize;
+            }
+
+            protected override ValidationResult IsValid(
+            object value, ValidationContext validationContext)
+            {
+                var file = value as IFormFile;
+                if (file != null)
+                {
+                    if (file.Length > _maxFileSize)
+                    {
+                        return new ValidationResult(GetErrorMessage());
+                    }
+                }
+
+                return ValidationResult.Success;
+            }
+
+            public string GetErrorMessage()
+            {
+                return $"Maximum allowed file size is {_maxFileSize} bytes.";
+            }
+        }
+
+        public class AllowedExtensionsAttribute : ValidationAttribute
+        {
+            private readonly string[] _extensions;
+            public AllowedExtensionsAttribute(string[] extensions)
+            {
+                _extensions = extensions;
+            }
+
+            protected override ValidationResult IsValid(
+            object value, ValidationContext validationContext)
+            {
+                var file = value as IFormFile;
+                if (file != null)
+                {
+                    var extension = Path.GetExtension(file.FileName);
+                    if (!_extensions.Contains(extension.ToLower()))
+                    {
+                        return new ValidationResult(GetErrorMessage());
+                    }
+                }
+
+                return ValidationResult.Success;
+            }
+
+            public string GetErrorMessage()
+            {
+                return $"This photo extension is not allowed!";
+            }
         }
     }
 }

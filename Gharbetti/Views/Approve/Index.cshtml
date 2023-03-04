@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<script src="~/js/Angularjs/angular.min.js"></script>
+<script src="~/js/Approve/Index.js"></script>
+
+<div ng-app="approveIndex" ng-controller="formController as ctrl"
+     ng-init="init(
+    @Newtonsoft.Json.JsonConvert.SerializeObject(ViewData["Approve"])
+     )" ng-cloak>
+    <div asp-validation-summary="None"></div>
+    <div class="box">
+        <div class="box-header with-border">
+
+            <table class="table table-fixed table-striped table-bordered" id="roomTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Mobile</th>
+                        <th>Date of Birth</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in ApproveList">
+                        <td>{{ data.FirstName }} {{ data.MiddleName }} {{ data.LastName }}</td>
+                        <td>{{ data.Email}}</td>
+                        <td>{{ data.PhoneNumber}}</td>
+                        <td>{{ data.MobileNumber}}</td>
+                        <td>{{ data.Dob}}</td>
+                        <th>
+                            <button type="button" class="btn btn-primary" ng-click="onClickAddress(data.Id)">Address</button>
+                        </th>
+                        <td>
+                            <button type="button" class="btn btn-primary" ng-click="onClickApprove(data.Id)">Approve</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Address</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label class="col-form-label">Address Line 1 :</label>
+                            <label>{{Address.AddressLine1}}</label>
+
+                            <label class="col-form-label">Address Line 2 :</label>
+                            <label>{{Address.AddressLine2}}</label>
+
+                            <label class="col-form-label">Address Line 3 :</label>
+                            <label>{{Address.AddressLine3}}</label>
+
+                            <label class="col-form-label">City :</label>
+                            <label>{{Address.City}}</label>
+
+                            <label class="col-form-label">County :</label>
+                            <label>{{Address.County}}</label>
+
+                            <label class="col-form-label">Postal Code :</label>
+                            <label>{{Address.PostalCode}}</label>
+
+                            <label class="col-form-label">Country :</label>
+                            <label>{{Address.Country}}</label>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

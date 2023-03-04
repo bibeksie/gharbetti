@@ -41,6 +41,14 @@
       "PackagePath": "staticwebassets\\js\\Angularjs\\angular.min.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Approve\\Index.js",
+      "PackagePath": "staticwebassets\\js\\Approve\\Index.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Complain\\Index.js",
+      "PackagePath": "staticwebassets\\js\\Complain\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\DataTable\\dataTables.min.js",
       "PackagePath": "staticwebassets\\js\\DataTable\\dataTables.min.js"
     },
@@ -299,6 +307,34 @@
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381338722693356791",
+      "PackagePath": "staticwebassets\\uploads"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381338732121682961",
+      "PackagePath": "staticwebassets\\uploads"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381338732121682962",
+      "PackagePath": "staticwebassets\\uploads"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381353845762753101.png",
+      "PackagePath": "staticwebassets\\uploads\\6381353845762753101.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381353845762753102.png",
+      "PackagePath": "staticwebassets\\uploads\\6381353845762753102.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381355711217857111.png",
+      "PackagePath": "staticwebassets\\uploads\\6381355711217857111.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381355711217857112.png",
+      "PackagePath": "staticwebassets\\uploads\\6381355711217857112.png"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Gharbetti.Microsoft.AspNetCore.StaticWebAssets.props",

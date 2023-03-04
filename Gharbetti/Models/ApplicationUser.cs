@@ -16,7 +16,6 @@ namespace Gharbetti.Models
         public DateTime Dob { get; set; }
         public string? Identification { get; set; }
         public string? PhotoId { get; set; }
-        public byte Status { get; set; }
         [Required]
         public string AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
