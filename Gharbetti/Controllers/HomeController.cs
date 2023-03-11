@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -41,13 +42,19 @@ namespace Gharbetti.Controllers
             //{
             if (this.User.IsInRole("pendingtenant"))
             {
-                await _signInManager.SignOutAsync();
-                _logger.LogInformation("User logged out.");
+                //await _signInManager.SignOutAsync();
+                //_logger.LogInformation("User logged out.");
+                var userData = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == _userId);
+                if (userData != null)
+                {
+                    ViewData["Remarks"] = userData.ApproveRemarks == null ? "Wait for LandLord to Respond" : userData.ApproveRemarks;
+                }
                 return View();
                 //return Response.Redirect(Url.ToString());
             }
 
             //}
+            ViewData["Remarks"] = "";
             return View();
         }
 

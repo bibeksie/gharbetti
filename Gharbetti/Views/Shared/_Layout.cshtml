@@ -51,7 +51,25 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Approve" asp-action="Index">Approve</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
+                            </li>
                         }
+
+                        @if (ViewContext.HttpContext.User.IsInRole("tenant"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
+                            </li>
+                        }
+
                     </ul>
                     <partial name="_LoginPartial"></partial>
                 </div>

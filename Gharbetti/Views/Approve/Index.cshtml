@@ -17,31 +17,43 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Mobile</th>
-                        <th>Date of Birth</th>
+                        <th>Detail</th>
                         <th>Address</th>
+                        <th>Room</th>
+                        <th>Stay Length</th>
+                        <th>Document</th>
+                        <th>Photo</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="data in ApproveList">
                         <td>{{ data.FirstName }} {{ data.MiddleName }} {{ data.LastName }}</td>
-                        <td>{{ data.Email}}</td>
-                        <td>{{ data.PhoneNumber}}</td>
-                        <td>{{ data.MobileNumber}}</td>
-                        <td>{{ data.Dob}}</td>
+                      
+                        <th>
+                            <button type="button" class="btn btn-primary" ng-click="onClickDetail(data.Id)">UserDetail</button>
+                        </th>
                         <th>
                             <button type="button" class="btn btn-primary" ng-click="onClickAddress(data.Id)">Address</button>
                         </th>
+                        <td>{{ data.RoomName}}</td>
+                        <td>{{ data.StayLength}}</td>
+                        <td><button><a href="~/uploads/{{data.Identification}}" target="_blank">Download</a></button></td>
+                        <td><button><a href="~/uploads/{{data.PhotoId}}" target="_blank">Download</a></button></td>
                         <td>
                             <button type="button" class="btn btn-primary" ng-click="onClickApprove(data.Id)">Approve</button>
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-primary" ng-click="onClickReSubmit(data.Id)">Resubmit with Remarks</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+       
+
+
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -49,29 +61,102 @@
                         <h5 class="modal-title">Address</h5>
                     </div>
                     <div class="modal-body">
+                        <div form-group>
+                            <label class="form-label">Address Line 1 :</label>
+                            <p class="form-label">{{Address.AddressLine1}}</p>
+                        </div>
+
+                        <div form-group>
+                            <label class="form-label">Address Line 2 :</label>
+                            <p class="form-label">{{Address.AddressLine2}}</p>
+                        </div>
+
+
+                        <div form-group>
+                            <label class="form-label">Address Line 3 :</label>
+                            <p class="form-label">{{Address.AddressLine3}}</p>
+                        </div>
+
+                        <div form-group>
+                            <label class="form-label">City :</label>
+                            <p class="form-label">{{Address.City}}</p>
+                        </div>
+
+
+                        <div form-group>
+                            <label class="form-label">County:</label>
+                            <p class="form-label">{{Address.County}}</p>
+                        </div>
+
+
+                        <div form-group>
+                            <label class="form-label">Postal Code :</label>
+                            <p class="form-label">{{Address.PostalCode}}</p>
+                        </div>
+
+                        <div form-group>
+                            <label class="form-label">Country :</label>
+                            <p class="form-label">{{Address.Country}}</p>
+                        </div>
+                                               
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Detail</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div form-group>
+                            <label class="form-label">Email :</label>
+                            <p class="form-label">{{PersonalDetail.Email}}</p>
+                        </div>
+
+                        <div form-group>
+                            <label class="form-label">Phone :</label>
+                            <p class="form-label">{{PersonalDetail.PhoneNumber}}</p>
+                        </div>
+
+
+                        <div form-group>
+                            <label class="form-label">Mobile :</label>
+                            <p class="form-label">{{PersonalDetail.MobileNumber}}</p>
+                        </div>
+
+                        <div form-group>
+                            <label class="form-label">Dob :</label>
+                            <p class="form-label">{{PersonalDetail.Dob}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="resubmitRemark" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Resumbit Remarks</h5>
+                    </div>
+                    <div class="modal-body">
                         <div>
-                            <label class="col-form-label">Address Line 1 :</label>
-                            <label>{{Address.AddressLine1}}</label>
-
-                            <label class="col-form-label">Address Line 2 :</label>
-                            <label>{{Address.AddressLine2}}</label>
-
-                            <label class="col-form-label">Address Line 3 :</label>
-                            <label>{{Address.AddressLine3}}</label>
-
-                            <label class="col-form-label">City :</label>
-                            <label>{{Address.City}}</label>
-
-                            <label class="col-form-label">County :</label>
-                            <label>{{Address.County}}</label>
-
-                            <label class="col-form-label">Postal Code :</label>
-                            <label>{{Address.PostalCode}}</label>
-
-                            <label class="col-form-label">Country :</label>
-                            <label>{{Address.Country}}</label>
+                            <label class="col-form-label">Remarks :</label>
+                            <textarea ng-model="SubmitRemarks.Remarks" placeholder="Enter Remarks" rows="4" cols="50">
+                                    </textarea>
 
                         </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="onClickSaveRemarks()">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
 
                 </div>

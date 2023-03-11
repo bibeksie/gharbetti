@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Gharbetti.Models
+namespace Gharbetti.ViewModels
 {
-    public class CleanSchedule
+    public class CleanScheduleViewModel
     {
-        [Key]
         public int Id { get; set; }
         public Guid TenantId { get; set; }
+        public string Remarks { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Guid CreatedBy { get; set; }
-        public string? Remarks { get; set; }
+        public string StartDateString { get; set; }
+        public string EndDateString { get; set; }
     }
 }

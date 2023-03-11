@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\css\\angular-csp.min.css"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\css\\datepicker\\bootstrap-datepicker3.min.css",
+      "PackagePath": "staticwebassets\\css\\datepicker\\bootstrap-datepicker3.min.css"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\css\\select2\\select2.min.css",
       "PackagePath": "staticwebassets\\css\\select2\\select2.min.css"
     },
@@ -45,6 +49,10 @@
       "PackagePath": "staticwebassets\\js\\Approve\\Index.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\CleanSchedule\\Index.js",
+      "PackagePath": "staticwebassets\\js\\CleanSchedule\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Complain\\Index.js",
       "PackagePath": "staticwebassets\\js\\Complain\\Index.js"
     },
@@ -67,6 +75,10 @@
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Room\\Index.js",
       "PackagePath": "staticwebassets\\js\\Room\\Index.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\datepicker\\bootstrap-datepicker.min.js",
+      "PackagePath": "staticwebassets\\js\\datepicker\\bootstrap-datepicker.min.js"
     },
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\select2\\select2.min.js",
@@ -335,6 +347,14 @@
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\6381355711217857112.png",
       "PackagePath": "staticwebassets\\uploads\\6381355711217857112.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638141342611079193.pdf",
+      "PackagePath": "staticwebassets\\uploads\\638141342611079193.pdf"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638141342611079193.png",
+      "PackagePath": "staticwebassets\\uploads\\638141342611079193.png"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Gharbetti.Microsoft.AspNetCore.StaticWebAssets.props",

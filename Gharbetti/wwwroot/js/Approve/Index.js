@@ -14,6 +14,18 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             Country: ""
         }
 
+        $scope.PersonalDetail = {
+            Email: "",
+            PhoneNumber: "",
+            MobileNumber: "",
+            Dob: "",
+
+        }
+
+        $scope.SubmitRemarks = {
+            Id: "",
+            Remarks: ""
+        }
 
         $scope.init = function (tenantList) {
 
@@ -62,6 +74,52 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                     }
                 });
             }
+        }
+
+
+        $scope.onClickReSubmit = function (id) {
+            $scope.SubmitRemarks = {
+                Id: id,
+                Remarks: ""
+            }
+
+            $('#resubmitRemark').modal('show');
+        }
+
+
+        $scope.onClickSaveRemarks = function () {
+            $http.get(`/api/Approve/Resubmit/?userId=${$scope.SubmitRemarks.Id}&remarks=${$scope.SubmitRemarks.Remarks}`)
+                .then(function (responsedata) {
+                    debugger;
+                    console.log(responsedata.data);
+                    if (responsedata.data.Status) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Error Occured");
+                    }
+                });
+        }
+
+
+        $scope.onClickDetail = function (id) {
+
+            $scope.PersonalDetail = {
+                Email: "",
+                PhoneNumber: "",
+                MobileNumber: "",
+                Dob: "",
+
+            }
+
+            let data = $scope.ApproveList.find(x => x.Id == id);
+
+            $scope.PersonalDetail.Email = data.Email
+            $scope.PersonalDetail.PhoneNumber = data.PhoneNumber
+            $scope.PersonalDetail.MobileNumber = data.MobileNumber
+            $scope.PersonalDetail.Dob = data.Dob
+               
+            $('#userModal').modal('show');
         }
 
 

@@ -6,6 +6,9 @@ namespace Gharbetti.ViewModels
     {
         public int Id { get; set; }
         public int HouseId { get; set; }
+        public string HouseName { get; set; } = string.Empty;
+
         public int RoomId { get; set; }
+        public string RoomName { get; set;} = string.Empty;
     }
 }

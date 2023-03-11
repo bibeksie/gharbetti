@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jNqEg6Orh+Ad0atCqiNRI+DxYEVFTG2cMB/vVodtduE=",
+  "Hash": "DxUut0wzqqo/fvOOn730XqjQ9smtUpNETBbUI891qNg=",
   "Source": "Gharbetti",
   "BasePath": "_content/Gharbetti",
   "Mode": "Default",
@@ -1122,6 +1122,23 @@
       "OriginalItemSpec": "wwwroot\\css\\DataTable\\dataTables.min.css"
     },
     {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\css\\datepicker\\bootstrap-datepicker3.min.css",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "css/datepicker/bootstrap-datepicker3.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\datepicker\\bootstrap-datepicker3.min.css"
+    },
+    {
       "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\css\\select2\\select2.min.css",
       "SourceId": "Gharbetti",
       "SourceType": "Discovered",
@@ -1241,6 +1258,23 @@
       "OriginalItemSpec": "wwwroot\\js\\Approve\\Index.js"
     },
     {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\CleanSchedule\\Index.js",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "js/CleanSchedule/Index.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\CleanSchedule\\Index.js"
+    },
+    {
       "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Complain\\Index.js",
       "SourceId": "Gharbetti",
       "SourceType": "Discovered",
@@ -1273,6 +1307,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\DataTable\\dataTables.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\datepicker\\bootstrap-datepicker.min.js",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "js/datepicker/bootstrap-datepicker.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\datepicker\\bootstrap-datepicker.min.js"
     },
     {
       "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Floor\\Index.js",
@@ -2480,6 +2531,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\6381355711217857112.png"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638141342611079193.pdf",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "uploads/638141342611079193.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\638141342611079193.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638141342611079193.png",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "uploads/638141342611079193.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\638141342611079193.png"
     }
   ]
 }

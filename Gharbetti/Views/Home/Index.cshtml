@@ -1,8 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var Remarks = ViewData["Remarks"] as string;
 }
 
 <div class="text-center">
-    <h1 class="display-4">It's me Mario</h1>
-    
+    <h1 class="display-4">
+        @if (!string.IsNullOrEmpty(Remarks))
+        {
+           @Remarks
+        }
+    </h1>
+
 </div>

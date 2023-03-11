@@ -11,7 +11,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Gharbetti.Data;
 using Gharbetti.Models;
+using Gharbetti.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +23,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -36,6 +39,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
         private Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+        private readonly ApplicationDbContext _db;
 
 
         public RegisterModel(
@@ -45,7 +49,8 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager,
-            Microsoft.AspNetCore.Hosting.IHostingEnvironment environment
+            Microsoft.AspNetCore.Hosting.IHostingEnvironment environment,
+            ApplicationDbContext db
             )
         {
             _userManager = userManager;
@@ -56,6 +61,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _roleManager = roleManager;
             _environment = environment;
+            _db = db;
         }
 
         /// <summary>
@@ -166,6 +172,13 @@ namespace Gharbetti.Areas.Identity.Pages.Account
 
             [ValidateNever]
             public IEnumerable<SelectListItem> CountryList { get; set; }
+            
+            
+            [ValidateNever]
+            public IEnumerable<SelectListItem> RoomList { get; set; }
+
+            public int RoomId { get; set; }
+            public string StayLength { get; set; }
         }
 
 
@@ -180,15 +193,34 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+                       
+            var roomList = await (from r in _db.Rooms
+                            join hr in _db.HouseRooms on r.Id equals hr.RoomId
+                            join h in _db.Houses on hr.HouseId equals h.Id
+                            select new HouseRoomViewModel
+                            {
+                                Id = r.Id,
+                                HouseId = h.Id,
+                                RoomId = r.Id,
+                                HouseName = h.Name,
+                                RoomName = r.RoomNo
+                            }).ToListAsync();
+            
+            
             Input = new InputModel()
             {
                 CountryList = GetCountryList().Select(x => new SelectListItem
                 {
                     Text = x,
                     Value = x
+                }),
+                RoomList = roomList.Select(x => new SelectListItem
+                {
+                    Text = x.HouseName + "-> " + x.RoomName,
+                    Value = x.Id.ToString()
                 })
             };
-
+           
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -199,15 +231,15 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             {
                 var dateTimeTick = DateTime.Now.Ticks.ToString();
 
-                var tickIdentification = $"{dateTimeTick}1";
-                var file1 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickIdentification}.{Input.IdentificationFile.FileName.Split(".")[1]}");
+                var tickIdentification = $"{dateTimeTick}.{Input.IdentificationFile.FileName.Split(".")[1]}";
+                var file1 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickIdentification}");
                 using (var fileStream = new FileStream(file1, FileMode.Create))
                 {
                     await Input.IdentificationFile.CopyToAsync(fileStream);
                 }
 
-                var tickPhotoFile = $"{dateTimeTick}2";
-                var file2 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickPhotoFile}.{Input.IdentificationFile.FileName.Split(".")[1]}");
+                var tickPhotoFile = $"{dateTimeTick}.{Input.PhotoFile.FileName.Split(".")[1]}";
+                var file2 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickPhotoFile}");
                 using (var fileStream = new FileStream(file2, FileMode.Create))
                 {
                     await Input.PhotoFile.CopyToAsync(fileStream);
@@ -232,6 +264,8 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 user.MobileNumber = Input.MobileNumber;
                 user.Identification = tickIdentification;
                 user.PhotoId = tickPhotoFile;
+                user.RoomId = Input.RoomId;
+                user.StayLength = Input.StayLength;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

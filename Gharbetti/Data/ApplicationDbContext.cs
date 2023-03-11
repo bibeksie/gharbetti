@@ -18,5 +18,6 @@ namespace Gharbetti.Data
         public DbSet<HouseRoom> HouseRooms { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Complain> Complains { get; set; }
+        public DbSet<CleanSchedule> CleanSchedules { get; set; }
     }
 }

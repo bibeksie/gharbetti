@@ -12,7 +12,7 @@ namespace Gharbetti.Controllers
         private readonly ApplicationDbContext _db;
         private readonly string? _userId;
 
-        public ComplainController(ApplicationDbContext db,IHttpContextAccessor httpContextAccessor)
+        public ComplainController(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -21,12 +21,21 @@ namespace Gharbetti.Controllers
         [Route("index")]
         public IActionResult Index()
         {
-            var complainList = _db.Complains.Where(x => x.TenantId ==  Guid.Parse(_userId)).ToList();
-            ViewData["Complain"] = complainList;
-            return View();
-        }  
+            if (this.User.IsInRole("tenant"))
+            {
+                var complainList = _db.Complains.Where(x => x.TenantId == Guid.Parse(_userId)).ToList();
+                ViewData["Complain"] = complainList;
+            }
+            else if (this.User.IsInRole("admin"))
+            {
+                var complainList = _db.Complains.OrderByDescending(x => x.ComplainDate).ToList();
+                ViewData["Complain"] = complainList;
+            }
 
-        
+            return View();
+        }
+
+
 
     }
 }

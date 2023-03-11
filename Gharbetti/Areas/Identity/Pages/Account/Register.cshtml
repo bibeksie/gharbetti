@@ -2,6 +2,7 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -107,6 +108,20 @@
                 <label asp-for="Input.PhotoId"></label>
             </div>
 
+
+            <div class="form-floating">
+                <select asp-for="Input.RoomId" asp-items="@Model.Input.RoomList" class="form-control">
+                    <option disabled selected>-Select Room-</option>
+                </select>
+                <label asp-for="Input.RoomId"></label>
+                <span asp-validation-for="Input.RoomId" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Input.StayLength" class="form-control" autocomplete="off" aria-required="true" />
+                <label asp-for="Input.StayLength"></label>
+                <span asp-validation-for="Input.StayLength" class="text-danger"></span>
+            </div>
 
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>

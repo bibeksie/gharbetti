@@ -49,5 +49,27 @@ namespace Gharbetti.ApiControllers
             }
         }
 
+
+        [HttpGet]
+        [Route("Resubmit")]
+        public async Task<IActionResult> Resubmit(string userId, string remarks)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var userApplication = await _db.ApplicationUsers.FirstAsync(x => x.Id == userId);
+
+            if (userApplication != null)
+            {
+                userApplication.ApproveRemarks = remarks;
+
+                _db.ApplicationUsers.Update(userApplication);
+                _db.SaveChanges();
+                return Ok(new { Status = true, Message = "Remarks Send Successfully!!!" });
+            }
+
+            return Ok(new { Status = false, Message = "Error while saving remarks" });
+        }
+
+      
+
     }
 }

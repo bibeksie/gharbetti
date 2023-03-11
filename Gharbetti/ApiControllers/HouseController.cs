@@ -65,7 +65,7 @@ namespace Gharbetti.ApiControllers
         {
             var editData = _db.Houses.FirstOrDefault(x => x.Id == id);
 
-            if(editData == null)
+            if (editData == null)
             {
                 return Ok(new { Status = false, Message = "Data Not Found!!!" });
             }
@@ -145,7 +145,7 @@ namespace Gharbetti.ApiControllers
                 {
                     dbContext.Rollback();
                     return Ok(new { Data = model, Status = false, Message = "Error Occured" });
-                } 
+                }
             }
         }
 
@@ -183,6 +183,35 @@ namespace Gharbetti.ApiControllers
             {
                 return Ok(new { Status = false, Message = "Data Not Found!!!" });
             }
+        }
+
+
+        [HttpGet]
+        [Route("GetHouses")]
+        public IActionResult GetHouses()
+        {
+
+            var houseList = _db.Houses.ToList();
+
+            return Ok(new { Status = true, Message = "Data Load Sucessfully", Data = houseList });
+        }
+
+
+        [HttpGet]
+        [Route("GetHouseById")]
+        public IActionResult GetHouseById(int id)
+        {
+            var houseList = _db.Houses.FirstAsync(x => x.Id == id);
+
+            if (houseList is not null)
+            {
+                return Ok(new { Status = true, Message = "Data Load Sucessfully", Data = houseList });
+            }
+            else
+            {
+                return Ok(new { Status = false, Message = "House not Found"});
+            }
+
         }
     }
 }
