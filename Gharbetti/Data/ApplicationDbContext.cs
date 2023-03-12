@@ -19,5 +19,9 @@ namespace Gharbetti.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Complain> Complains { get; set; }
         public DbSet<CleanSchedule> CleanSchedules { get; set; }
+        public DbSet<ExpenseType> ExpenseTypes { get; set; }
+        public DbSet<PaymentMode> PaymentModes { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionDetail> TransactionDetails { get; set; }
     }
 }

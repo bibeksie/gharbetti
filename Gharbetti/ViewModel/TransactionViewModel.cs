@@ -1,10 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Gharbetti.Models
+namespace Gharbetti.ViewModels
 {
-    public class Transaction
+    public class TransactionViewModel
     {
-        [Key]
+        public TransactionViewModel() 
+        {
+            TransactionDetails = new List<TransactionDetailViewModel>();
+        }
         public int Id { get; set; }
         public int RoomLeaseDetailId { get; set; }
         public Guid TenantId { get; set; }
@@ -16,6 +19,6 @@ namespace Gharbetti.Models
         public DateTime EndDate { get; set; }
         public decimal RentAmount { get; set; }
         public decimal RentPaid { get; set; }
-
+        public List<TransactionDetailViewModel> TransactionDetails { get; set; } 
     }
 }

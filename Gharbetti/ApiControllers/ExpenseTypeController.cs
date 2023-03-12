@@ -7,20 +7,20 @@ namespace Gharbetti.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoomTypeController : ControllerBase
+    public class ExpenseTypeController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
 
-        public RoomTypeController(ApplicationDbContext db)
+        public ExpenseTypeController(ApplicationDbContext db)
         {
             _db = db;
         }
 
         [Route("Add")]
         [HttpPost]
-        public IActionResult Add([FromBody] RoomType model)
+        public IActionResult Add([FromBody] ExpenseType model)
         {
-            _db.RoomTypes.Add(model);
+            _db.ExpenseTypes.Add(model);
             _db.SaveChanges();
 
             return Ok(new { Data = model, Status = true });
@@ -30,7 +30,7 @@ namespace Gharbetti.ApiControllers
         [Route("Edit")]
         public IActionResult Edit(int id)
         {
-            var editData = _db.RoomTypes.FirstOrDefault(x => x.Id == id);
+            var editData = _db.ExpenseTypes.FirstOrDefault(x => x.Id == id);
 
             if (editData != null)
             {
@@ -45,9 +45,9 @@ namespace Gharbetti.ApiControllers
 
         [HttpPost]
         [Route("Edit")]
-        public IActionResult Edit([FromBody] RoomType model)
+        public IActionResult Edit([FromBody] ExpenseType model)
         {
-            _db.RoomTypes.Update(model);
+            _db.ExpenseTypes.Update(model);
             _db.SaveChanges();
 
             return Ok(new { Data = model, Status = true });
@@ -58,11 +58,11 @@ namespace Gharbetti.ApiControllers
         [Route("Delete")]
         public IActionResult Delete(int id)
         {
-            var editData = _db.RoomTypes.FirstOrDefault(x => x.Id == id);
+            var editData = _db.ExpenseTypes.FirstOrDefault(x => x.Id == id);
 
             if (editData != null)
             {
-                _db.RoomTypes.Remove(editData);
+                _db.ExpenseTypes.Remove(editData);
                 _db.SaveChanges();
                 return Ok(new { Data = editData, Status = true, Message="Deleted Successfully!!!" });
             }
@@ -75,7 +75,7 @@ namespace Gharbetti.ApiControllers
         [HttpGet]
         public IActionResult Get()
         {
-            var allFloor = _db.RoomTypes.ToList();
+            var allFloor = _db.ExpenseTypes.ToList();
             return Ok(new { Data = allFloor, Status = true, Message = "Data Loaded " });
         }
     }

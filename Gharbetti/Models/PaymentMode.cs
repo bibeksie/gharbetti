@@ -2,10 +2,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Gharbetti.Models
 {
-    public class ExpenseType
+    public class PaymentMode
     {
         [Key]
         public int Id { get; set; }
+        
+        [Required]
         public string Name { get; set; }
+        
     }
 }

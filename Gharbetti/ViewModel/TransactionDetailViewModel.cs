@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Gharbetti.Models
+namespace Gharbetti.ViewModels
 {
-    public class TransactionDetail
+    public class TransactionDetailViewModel
     {
-        [Key]
         public int Id { get; set; }
         public int TransactionId { get; set; }
         public int ExpenseId { get; set; }

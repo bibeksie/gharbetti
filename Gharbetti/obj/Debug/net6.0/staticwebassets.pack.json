@@ -61,12 +61,20 @@
       "PackagePath": "staticwebassets\\js\\DataTable\\dataTables.min.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\ExpenseType\\Index.js",
+      "PackagePath": "staticwebassets\\js\\ExpenseType\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Floor\\Index.js",
       "PackagePath": "staticwebassets\\js\\Floor\\Index.js"
     },
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\House\\Index.js",
       "PackagePath": "staticwebassets\\js\\House\\Index.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\PaymentMode\\Index.js",
+      "PackagePath": "staticwebassets\\js\\PaymentMode\\Index.js"
     },
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\RoomType\\Index.js",

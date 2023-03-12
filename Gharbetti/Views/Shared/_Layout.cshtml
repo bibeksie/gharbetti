@@ -3,6 +3,12 @@
         margin-bottom: 80px;
     }
 
+    body { padding-top: 70px; }
+
+
+    
+}
+
 </style>
 <!DOCTYPE html>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -56,10 +62,15 @@
                                         <li>
                                             <a asp-area="" asp-controller="RoomType" asp-action="Index">Room Type</a>
                                         </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="ExpenseType" asp-action="Index">Expense Type</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="PaymentMode" asp-action="Index">Payment Mode</a>
+                                    </li>
 
 
 
-                                        <li class="divider"></li>
 
                                     </ul>
                                 </li>
@@ -104,8 +115,7 @@
     </header>
     <div class="container">
         @RenderBody()
-        @*<main role="main" class="pb-3">
-        </main>*@
+       
     </div>
 
 
