@@ -101,11 +101,14 @@
             <div class="form-floating">
                 <input type="file" name="Input.IdentificationFile" id="file" /><br><br>
                 <label asp-for="Input.Identification"></label>
+                <span asp-validation-for="Input.IdentificationFile" class="text-danger"></span>
+
             </div>
 
             <div class="form-floating">
                 <input type="file" name="Input.PhotoFile" id="file" /><br><br>
                 <label asp-for="Input.PhotoId"></label>
+                <span asp-validation-for="Input.PhotoId" class="text-danger"></span>
             </div>
 
 

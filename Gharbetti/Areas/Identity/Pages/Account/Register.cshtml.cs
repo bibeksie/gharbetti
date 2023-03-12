@@ -238,6 +238,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                     await Input.IdentificationFile.CopyToAsync(fileStream);
                 }
 
+                dateTimeTick = DateTime.Now.Ticks.ToString();
                 var tickPhotoFile = $"{dateTimeTick}.{Input.PhotoFile.FileName.Split(".")[1]}";
                 var file2 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", $"{tickPhotoFile}");
                 using (var fileStream = new FileStream(file2, FileMode.Create))
@@ -253,6 +254,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.MiddleName = Input.MiddleName;
                 user.LastName = Input.LastName;
+                user.Dob = Input.Dob;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.AddressLine1 = Input.AddressLine1;
                 user.AddressLine2 = Input.AddressLine2;
@@ -268,7 +270,6 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 user.StayLength = Input.StayLength;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
 
 
 

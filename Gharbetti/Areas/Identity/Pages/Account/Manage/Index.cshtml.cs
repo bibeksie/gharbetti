@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using static Gharbetti.Areas.Identity.Pages.Account.RegisterModel;
 
 namespace Gharbetti.Areas.Identity.Pages.Account.Manage
@@ -24,16 +26,21 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _db;
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+
 
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
+                        Microsoft.AspNetCore.Hosting.IHostingEnvironment environment,
             ApplicationDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
+            _environment = environment;
+
 
         }
 
@@ -111,16 +118,12 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
 
 
             [BindProperty]
-            [Required(ErrorMessage = "Please select a file.")]
             [DataType(DataType.Upload)]
             public IFormFile IdentificationFile { get; set; }
 
 
             [BindProperty]
-            [Required(ErrorMessage = "Please select a file.")]
             [DataType(DataType.Upload)]
-            [MaxFileSize(5 * 1024 * 1024)]
-            [AllowedExtensions(new string[] { ".jpg", ".png" })]
             public IFormFile PhotoFile { get; set; }
 
             [ValidateNever]
@@ -133,8 +136,6 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
             public int RoomId { get; set; }
             public string StayLength { get; set; }
 
-            public bool IsUploadPhoto { get; set; }
-            public bool IsUploadDocument { get; set; }
 
         }
 
@@ -159,7 +160,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
                                   }).ToListAsync();
 
 
-          
+
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
@@ -177,8 +178,6 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
                 LastName = userData.LastName,
                 MiddleName = userData.MiddleName,
                 Dob = userData.Dob,
-                IsUploadDocument = false,
-                IsUploadPhoto = false,
                 Identification = userData.Identification,
                 PhotoId = userData.PhotoId,
                 CountryList = GetCountryList().Select(x => new SelectListItem
@@ -209,32 +208,112 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            try
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
 
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
-
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
+                    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
                 }
-            }
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
-            return RedirectToPage();
+                if (!ModelState.IsValid)
+                {
+                    await LoadAsync(user);
+                    return Page();
+                }
+
+                var userData = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == user.Id);
+
+
+
+                var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+                if (Input.PhoneNumber != phoneNumber)
+                {
+                    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                    if (!setPhoneResult.Succeeded)
+                    {
+
+                        StatusMessage = "Unexpected error when trying to set phone number.";
+                        return RedirectToPage();
+                    }
+                }
+
+
+                var tickIdentification = "";
+                if (Input.IdentificationFile != null)
+                {
+                    var fileName = userData.Identification.ToString();
+                    var fullPath = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", fileName);
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+
+                    var dateTimeTick = DateTime.Now.Ticks.ToString();
+                    tickIdentification = $"{dateTimeTick}.{Input.IdentificationFile.FileName.Split(".")[1]}";
+                    var file1 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", tickIdentification);
+                    using (var fileStream = new FileStream(file1, FileMode.Create))
+                    {
+                        await Input.IdentificationFile.CopyToAsync(fileStream);
+                    }
+                }
+
+                var tickPhotoFile = "";
+                if (Input.PhotoFile != null)
+                {
+                    var fileName = userData.PhotoId.ToString();
+                    var fullPath = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", fileName);
+                    //string webRootPath = _environment.WebRootPath;
+                    //var fileName = userData.PhotoId.ToString();
+                    //var fullPath = webRootPath + "/uploads/" + fileName;
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+
+                    var dateTimeTick = DateTime.Now.Ticks.ToString();
+                    tickPhotoFile = $"{dateTimeTick}.{Input.PhotoFile.FileName.Split(".")[1]}";
+                    var file2 = Path.Combine(_environment.ContentRootPath, @"wwwroot\uploads", tickPhotoFile);
+                    using (var fileStream = new FileStream(file2, FileMode.Create))
+                    {
+                        await Input.PhotoFile.CopyToAsync(fileStream);
+                    }
+
+                }
+
+                userData.FirstName = Input.FirstName;
+                userData.MiddleName = Input.MiddleName;
+                userData.Dob = Input.Dob;
+                userData.LastName = Input.LastName;
+                userData.AddressLine1 = Input.AddressLine1;
+                userData.AddressLine2 = Input.AddressLine2;
+                userData.AddressLine3 = Input.AddressLine3;
+                userData.City = Input.City;
+                userData.PostalCode = Input.PostalCode;
+                userData.Country = Input.Country;
+                userData.County = Input.County;
+                userData.MobileNumber = Input.MobileNumber;
+                userData.Identification = tickIdentification.IsNullOrEmpty() ? userData.Identification : tickIdentification ;
+                userData.PhotoId = tickPhotoFile.IsNullOrEmpty() ? userData.PhotoId : tickPhotoFile;
+                userData.RoomId = Input.RoomId;
+                userData.StayLength = Input.StayLength;
+
+                _db.ApplicationUsers.Update(userData);
+                _db.SaveChanges();
+
+
+                await _signInManager.RefreshSignInAsync(user);
+                StatusMessage = "Your profile has been updated";
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = "Error found while Updating Profile!!!";
+                return RedirectToPage();
+            }
         }
 
         public static List<string> GetCountryList()
@@ -315,5 +394,5 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
         }
     }
 
-  
+
 }

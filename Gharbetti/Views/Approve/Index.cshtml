@@ -38,8 +38,8 @@
                         </th>
                         <td>{{ data.RoomName}}</td>
                         <td>{{ data.StayLength}}</td>
-                        <td><button><a href="~/uploads/{{data.Identification}}" target="_blank">Download</a></button></td>
-                        <td><button><a href="~/uploads/{{data.PhotoId}}" target="_blank">Download</a></button></td>
+                        <td><a href="~/uploads/{{data.Identification}}" target="_blank">View</a></td>
+                        <td><a href="~/uploads/{{data.PhotoId}}" target="_blank">View</a></td>
                         <td>
                             <button type="button" class="btn btn-primary" ng-click="onClickApprove(data.Id)">Approve</button>
                         </td>

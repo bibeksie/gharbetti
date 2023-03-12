@@ -353,8 +353,20 @@
       "PackagePath": "staticwebassets\\uploads\\638141342611079193.pdf"
     },
     {
-      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638141342611079193.png",
-      "PackagePath": "staticwebassets\\uploads\\638141342611079193.png"
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638142283244486607.jpg",
+      "PackagePath": "staticwebassets\\uploads\\638142283244486607.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638142295438267802.jpg",
+      "PackagePath": "staticwebassets\\uploads\\638142295438267802.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638142299433248568.jpg",
+      "PackagePath": "staticwebassets\\uploads\\638142299433248568.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638142299722033526.png",
+      "PackagePath": "staticwebassets\\uploads\\638142299722033526.png"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Gharbetti.Microsoft.AspNetCore.StaticWebAssets.props",
