@@ -177,8 +177,8 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoomList { get; set; }
 
-            public int RoomId { get; set; }
-            public string StayLength { get; set; }
+            public int? RoomId { get; set; }
+            public string? StayLength { get; set; }
         }
 
 

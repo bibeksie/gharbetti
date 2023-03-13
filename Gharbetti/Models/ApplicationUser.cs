@@ -27,7 +27,7 @@ namespace Gharbetti.Models
         public string? County { get; set; }
         [Required]
         public string Country { get; set; }
-        public int RoomId { get; set; }
+        public int? RoomId { get; set; }
         public string? StayLength { get; set; }
 
         public string? ApproveRemarks { get; set; }
