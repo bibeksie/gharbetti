@@ -65,6 +65,10 @@
       "PackagePath": "staticwebassets\\js\\ExpenseType\\Index.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Expense\\Index.js",
+      "PackagePath": "staticwebassets\\js\\Expense\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Floor\\Index.js",
       "PackagePath": "staticwebassets\\js\\Floor\\Index.js"
     },
@@ -83,6 +87,10 @@
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Room\\Index.js",
       "PackagePath": "staticwebassets\\js\\Room\\Index.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Transaction\\Index.js",
+      "PackagePath": "staticwebassets\\js\\Transaction\\Index.js"
     },
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\datepicker\\bootstrap-datepicker.min.js",
@@ -375,6 +383,14 @@
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638142299722033526.png",
       "PackagePath": "staticwebassets\\uploads\\638142299722033526.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638143351014242689.png",
+      "PackagePath": "staticwebassets\\uploads\\638143351014242689.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638143351014350865.jpg",
+      "PackagePath": "staticwebassets\\uploads\\638143351014350865.jpg"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Gharbetti.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -6,7 +6,6 @@ namespace Gharbetti.Models
     {
         [Key]
         public int Id { get; set; }
-        public int RoomLeaseDetailId { get; set; }
         public Guid TenantId { get; set; }
         public decimal Total { get; set; }
         public DateTime TransactionDate { get; set; }
@@ -16,6 +15,7 @@ namespace Gharbetti.Models
         public DateTime EndDate { get; set; }
         public decimal RentAmount { get; set; }
         public decimal RentPaid { get; set; }
+        public int PaymentModeId { get; set; }  
 
     }
 }

@@ -43,6 +43,14 @@
                         <li class="active">
                             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
+                        <li>
+                            <a asp-area="" asp-controller="Transaction" asp-action="Index">Transaction</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Expense" asp-action="Index">Expense Report</a>
+                        </li>
+
                         @if (ViewContext.HttpContext.User.IsInRole("admin"))
                         {
                                 <li class="dropdown">
