@@ -2,6 +2,7 @@
 using Gharbetti.Models;
 using Gharbetti.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -216,6 +217,71 @@ namespace Gharbetti.ApiControllers
             {
                 return Ok(new { Status = false, Message = "Error Occured" });
             }
+        }
+
+
+
+        [HttpPost]
+        [Route("GetPaidStatus")]
+        public async Task<IActionResult> GetPaidStatus([FromBody] FilterViewModel filterData)
+        {
+            try
+            {
+                var allUser = (from usr in _db.Users
+                               join userRole in _db.UserRoles on usr.Id equals userRole.UserId
+                               join role in _db.Roles on userRole.RoleId equals role.Id 
+                               join ap in _db.ApplicationUsers on usr.Id equals ap.Id
+                               join room in _db.Rooms on ap.RoomId equals room.Id
+                               join hr in _db.HouseRooms on room.Id equals hr.RoomId
+                               join h in _db.Houses on hr.HouseId equals h.Id
+                               where role.Name.ToLower() == "tenant"
+                               select new RentPaidViewModel
+                               {
+                                   Tenant = ap.FirstName + " " + ap.LastName,
+                                   UserId = usr.Id,
+                                   House = h.Name,
+                                   Room = room.RoomNo,
+                                   Status = "UnPaid",
+                                   RentAmount = room.RentAmount.ToString("0.00"),
+                                   RentPaid = "0"
+
+                               }).ToList();
+  
+
+                var allSameMonthTransaction = _db.Transactions.Where(x => allUser.Select(z => z.UserId).Contains(x.TenantId.ToString()) && x.TransactionDate.Month == filterData.Month);
+
+                foreach (var item in allUser)
+                {
+                    var matchTransaction = allSameMonthTransaction.FirstOrDefault(x => x.TenantId.ToString() == item.UserId);
+                    if (matchTransaction != null)
+                    {
+                        item.Status = "Paid";
+                        item.RentAmount = matchTransaction.RentAmount.ToString("0.00");
+                        item.RentPaid = matchTransaction.RentPaid.ToString("0.00");
+                    }
+                }
+
+                return Ok(new { Data = allUser, Status = true, Message = "Data Loaded " });
+
+
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Status = false, Message = "Error Occured" });
+            }
+        }
+
+
+        public class RentPaidViewModel
+        {
+            public string UserId { get; set; }
+            public string Tenant { get; set; }
+            public string House { get; set; }
+            public string Room { get; set; }
+            public string Status { get; set; }
+            public string RentAmount { get; set;}
+            public string RentPaid { get; set; }
+
         }
 
     }

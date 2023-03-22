@@ -22,11 +22,15 @@ app.controller('expenseController', ['$scope', '$filter', '$compile', '$http', '
             EndDateString: ""
         }
         $scope.CurrentRole = "";
+        $scope.AdminRentList = [];
 
         $scope.IsVisible = {
-            Tenant : false,
-            Admin : false,
+            Tenant: false,
+            Admin: false,
+            TransactionReport: true,
+            RentReport: true,
         };
+        $scope.ReportType = "1";
 
         $scope.init = function (currentRole) {
 
@@ -62,16 +66,30 @@ app.controller('expenseController', ['$scope', '$filter', '$compile', '$http', '
         $scope.onClickFilter = function () {
             $scope.TransactionList = [];
             $scope.AdminTransactionList = [];
+            $scope.AdminRentList = [];
 
             if ($filter('lowercase')($scope.CurrentRole) == "admin") {
-                $http.post("/api/Expense/GetLandlordRange", $scope.FilterData).then(function (responseData) {
-                    if (responseData.data.Status) {
-                        $scope.AdminTransactionList = responseData.data.Data;
-                    }
-                    else {
-                        alert(responseData.data.Message);
-                    }
-                });
+                if ($scope.IsVisible.TransactionReport) {
+
+                    $http.post("/api/Expense/GetLandlordRange", $scope.FilterData).then(function (responseData) {
+                        if (responseData.data.Status) {
+                            $scope.AdminTransactionList = responseData.data.Data;
+                        }
+                        else {
+                            alert(responseData.data.Message);
+                        }
+                    });
+                }
+                else {
+                    $http.post("/api/Expense/GetPaidStatus", $scope.FilterData).then(function (responseData) {
+                        if (responseData.data.Status) {
+                            $scope.AdminRentList = responseData.data.Data;
+                        }
+                        else {
+                            alert(responseData.data.Message);
+                        }
+                    });
+                }
             }
             else if ($filter('lowercase')($scope.CurrentRole) == "tenant") {
 
@@ -132,13 +150,25 @@ app.controller('expenseController', ['$scope', '$filter', '$compile', '$http', '
         }
 
         $scope.onChangeFilterType = function () {
-            if ($scope.FilterData.FilterType == "0") {
-                $scope.monthWise = true;
-                $scope.filterRange = false;
+
+            if ($scope.ReportType == "0") {
+                if ($scope.FilterData.FilterType == "0") {
+                    $scope.monthWise = true;
+                    $scope.filterRange = false;
+                }
+                else {
+                    $scope.monthWise = false;
+                    $scope.filterRange = true;
+                }
+                $scope.IsVisible.TransactionReport = true;
+                $scope.IsVisible.RentReport = false;
             }
             else {
+                $scope.FilterData.FilterType == "1";
                 $scope.monthWise = false;
                 $scope.filterRange = true;
+                $scope.IsVisible.TransactionReport = false;
+                $scope.IsVisible.RentReport = true;
             }
         }
     }]);
