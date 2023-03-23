@@ -77,6 +77,10 @@
       "PackagePath": "staticwebassets\\js\\House\\Index.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Message\\Index.js",
+      "PackagePath": "staticwebassets\\js\\Message\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\PaymentMode\\Index.js",
       "PackagePath": "staticwebassets\\js\\PaymentMode\\Index.js"
     },

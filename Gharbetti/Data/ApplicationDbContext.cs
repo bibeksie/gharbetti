@@ -23,5 +23,7 @@ namespace Gharbetti.Data
         public DbSet<PaymentMode> PaymentModes { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionDetail> TransactionDetails { get; set; }
+        public DbSet<Message> Message { get; set; }
+        public DbSet<TenantMessage> TenantMessages { get; set; }
     }
 }

@@ -51,6 +51,10 @@
                             <a asp-area="" asp-controller="Expense" asp-action="Index">Expense Report</a>
                         </li>
 
+
+                        <li>
+                            <a asp-area="" asp-controller="Message" asp-action="Index">Message</a>
+                        </li>
                         @if (ViewContext.HttpContext.User.IsInRole("admin"))
                         {
                                 <li class="dropdown">

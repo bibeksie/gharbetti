@@ -1,14 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Gharbetti.Models
+namespace Gharbetti.ViewModels
 {
-    public class Message
+    public class MessageViewModel
     {
-        [Key]
         public int Id { get; set; }
         public int HouseId { get; set; }
         public string Subject { get; set; }
-        public string Body { get; set; }
+        public string Body { get; set; } 
         public DateTime PostedDate { get; set; }
     }
 }
