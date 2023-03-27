@@ -1,13 +1,20 @@
-﻿var app = angular.module('houseIndex', ['ui.select', 'ngSanitize']);
+﻿var app = angular.module('houseIndex', ['ui.select', 'ngSanitize', 'ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.HouseList = [];
+        $scope.HouseList = {
+            records: [],
+        };
         $scope.RoomList = [];
         $scope.HouseModalTitle = "";
         $scope.MultipleRoom = [];
-
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
         $scope.House =
         {
             Id: 0,
@@ -28,7 +35,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
 
         $scope.init = function (houseList) {
 
-            $scope.HouseList = houseList;
+            $scope.HouseList.records = houseList;
             $scope.GetRoom();
         }
 

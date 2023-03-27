@@ -4,6 +4,11 @@
 
 
 <script src="~/js/Angularjs/angular.min.js"></script>
+<script src="~/js/DataTable/ui-bootstrap-tpls.min.js"></script>
+<script src="~/js/Angularjs/angular-ui-utils.min.js"></script>
+<script src="~/js/DataTable/dataTables.min.js"></script>
+<script src="~/js/DataTable/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/css/datatable/dataTables.min.css">
 <script src="~/js/Message/Index.js"></script>
 
 
@@ -17,7 +22,8 @@
 
             <button type="button" class="btn btn-primary" ng-click="onClickAddModal()">Add</button>
 
-            <table class="table table-fixed table-striped table-bordered" id="floorTable">
+            <table class="table table-fixed table-striped table-bordered datatable"
+                   ui-jq="dataTable" ui-options="dataTableOpt">
                 <thead class="thead-dark">
                     <tr>
                         <th>Subject</th>
@@ -26,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in MessageList">
+                    <tr ng-repeat="data in MessageList.records">
                         <td>{{ data.Subject }}</td>
                         <td>{{ data.PostedDate }}</td>
                         <td>

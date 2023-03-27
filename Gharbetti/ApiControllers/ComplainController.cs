@@ -65,6 +65,7 @@ namespace Gharbetti.ApiControllers
             {
                 editData.Reason = model.Reason;
                 editData.Status = model.Status;
+                editData.Response = model.Response;
 
                 _db.Complains.Update(editData);
                 _db.SaveChanges();

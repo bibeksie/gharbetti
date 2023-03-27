@@ -1,6 +1,8 @@
 ﻿using Gharbetti.Data;
 using Gharbetti.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Gharbetti.Controllers
 {
@@ -14,6 +16,7 @@ namespace Gharbetti.Controllers
             _db = db;
         }
 
+        [Authorize(Roles = "admin")]
         [Route("index")]
         public IActionResult Index()
         {

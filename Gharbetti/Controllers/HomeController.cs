@@ -36,25 +36,35 @@ namespace Gharbetti.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var user = await _userManager.GetUserAsync(User);
-            //var userDetail = _db.ApplicationUsers.FirstOrDefault(x => x.Id == _userId);
-            //if (userDetail != null)
-            //{
             if (this.User.IsInRole("pendingtenant"))
             {
-                //await _signInManager.SignOutAsync();
-                //_logger.LogInformation("User logged out.");
                 var userData = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == _userId);
                 if (userData != null)
                 {
                     ViewData["Remarks"] = userData.ApproveRemarks == null ? "Wait for LandLord to Respond" : userData.ApproveRemarks;
+                    ViewData["Role"] = "pendingtenant";
                 }
                 return View();
-                //return Response.Redirect(Url.ToString());
+            }
+            else if (this.User.IsInRole("tenant"))
+            {
+                var currentUserId = Guid.Parse(_userId);
+                var messageList = (from mess in _db.Message
+                                   join tm in _db.TenantMessages on mess.Id equals tm.MessageId
+                                   where tm.TenantId == currentUserId
+                                   select mess).ToList();
+
+                ViewData["Role"] = "tenant";
+                return View();
+            }
+            else if (this.User.IsInRole("admin"))
+            {
+                ViewData["Role"] = "admin";
+                return View();
             }
 
-            //}
-            ViewData["Remarks"] = "";
+            ViewData["Remarks"] = null;
+            ViewData["Role"] = null;
             return View();
         }
 

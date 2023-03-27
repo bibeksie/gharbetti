@@ -1,13 +1,20 @@
-﻿var app = angular.module('transactionIndex', []);
+﻿var app = angular.module('transactionIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('transactionController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.TransactionList = [];
+        $scope.TransactionList = {
+            records: [],
+        };
         $scope.PaymentModeList = [];
         $scope.ExpenseType = [];
         $scope.RoomModalTitle = "";
-
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
         $scope.Transaction =
         {
             Id: 0,
@@ -39,8 +46,8 @@ app.controller('transactionController', ['$scope', '$filter', '$compile', '$http
 
 
         $scope.init = function (transctionList,rentAmount) {
-           
-            $scope.TransactionList = transctionList;
+
+            $scope.TransactionList.records = transctionList;
             $scope.GetExpenseType();
             $scope.GetPaymentMode();
             $scope.RentAmount =  rentAmount,

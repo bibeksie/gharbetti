@@ -1,9 +1,11 @@
-﻿var app = angular.module('complainIndex', []);
+﻿var app = angular.module('complainIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.ComplainList = [];
+        $scope.ComplainList = {
+            records: [],
+        };
 
         $scope.Complain =
         {
@@ -13,6 +15,12 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             ComplainDate : "",
             Status: "",
             StatusDisabled : false,
+        };
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
         };
 
         $scope.StatusList = [
@@ -31,7 +39,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         ]
 
         $scope.init = function (complainList) {
-            $scope.ComplainList = complainList;
+            $scope.ComplainList.records = complainList;
         }
 
         $scope.onClickAdd = function () {

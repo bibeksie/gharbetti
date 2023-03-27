@@ -1,9 +1,11 @@
-﻿var app = angular.module('cleanScheduleIndex', []);
+﻿var app = angular.module('cleanScheduleIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.ComplainScheduleList = [];
+        $scope.ComplainScheduleList = {
+            records: [],
+        };
 
         $scope.CleanSchedule =
         {
@@ -16,9 +18,16 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         };
         $scope.emptyGuid = "00000000-0000-0000-0000-000000000000";
 
+        $scope.dataTableOpt = {
+
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
 
         $scope.init = function (cleanScheduleList) {
-            $scope.CleanScheduleList = cleanScheduleList;
+            $scope.CleanScheduleList.records = cleanScheduleList;
             $scope.GetTenantList();
 
 

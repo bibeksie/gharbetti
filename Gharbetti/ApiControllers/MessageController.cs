@@ -4,6 +4,7 @@ using Gharbetti.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using static Gharbetti.ApiControllers.ExpenseController;
 
 namespace Gharbetti.ApiControllers
@@ -13,10 +14,15 @@ namespace Gharbetti.ApiControllers
     public class MessageController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
+        private readonly string? _userId;
 
-        public MessageController(ApplicationDbContext db)
+        public MessageController(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
+            if (httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier) != null)
+            {
+                _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
         }
 
         [Route("Add")]
@@ -134,9 +140,9 @@ namespace Gharbetti.ApiControllers
 
                         _db.Message.Update(savedEditData);
 
-                        if(houseId != model.HouseId)
+                        if (houseId != model.HouseId)
                         {
-                            var allHouseList = await _db.TenantMessages.Where(x => x.MessageId ==  model.Id).ToListAsync();
+                            var allHouseList = await _db.TenantMessages.Where(x => x.MessageId == model.Id).ToListAsync();
 
                             _db.TenantMessages.RemoveRange(allHouseList);
                         }
@@ -253,6 +259,35 @@ namespace Gharbetti.ApiControllers
             var houseList = _db.Houses.ToList();
 
             return Ok(new { Status = true, Message = "Data Load Sucessfully", Data = houseList });
+        }
+
+
+        [HttpGet]
+        [Route("GetMessage")]
+        public IActionResult GetMessage()
+        {
+            try
+            {
+                var currentUserId = Guid.Parse(_userId);
+                var messageList = (from mess in _db.Message
+                                   join tm in _db.TenantMessages on mess.Id equals tm.MessageId
+                                   where tm.TenantId == currentUserId
+                                   select new
+                                   {
+                                       mess.Subject,
+                                       mess.Body,
+                                       PostedDateString = mess.PostedDate.ToShortDateString(),
+                                       mess.PostedDate
+                                   }).OrderByDescending(x => x.PostedDate).ToList();
+
+                return Ok(new {Status = true, Message= "Data Loaded Sucessfully" ,  Data = messageList });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Status = false, Message = "Error Occured" });
+            }
+
+
         }
     }
 }

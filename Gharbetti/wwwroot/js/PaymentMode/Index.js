@@ -1,17 +1,25 @@
-﻿var app = angular.module('paymentModeIndex', []);
+﻿var app = angular.module('paymentModeIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.PaymentModeList = [];
+        $scope.PaymentModeList = {
+            records: [],
+        };
         $scope.PaymentMode = {
             Id: 0,
             Name: "",
         }
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
 
         $scope.init = function (PaymentModeList) {
 
-            $scope.PaymentModeList = PaymentModeList;
+            $scope.PaymentModeList.records = PaymentModeList;
         }
 
         $scope.onClickAdd = function () {

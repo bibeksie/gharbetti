@@ -1,4 +1,4 @@
-﻿var app = angular.module('messageIndex', []);
+﻿var app = angular.module('messageIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
@@ -16,11 +16,20 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
             Name: "All"
 
         }];
-        $scope.MessageList = [];
+        $scope.MessageList = {
+            records: [],
+        };
+
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
 
 
         $scope.init = function (messageList) {
-            $scope.MessageList = messageList;
+            $scope.MessageList.records = messageList;
             $scope.GetHouse();
         }
 

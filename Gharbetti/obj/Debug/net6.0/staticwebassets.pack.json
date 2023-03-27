@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\js\\Angularjs\\angular-sanitize.min.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Angularjs\\angular-ui-utils.min.js",
+      "PackagePath": "staticwebassets\\js\\Angularjs\\angular-ui-utils.min.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Angularjs\\angular.min.js",
       "PackagePath": "staticwebassets\\js\\Angularjs\\angular.min.js"
     },
@@ -57,8 +61,16 @@
       "PackagePath": "staticwebassets\\js\\Complain\\Index.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\DataTable\\dataTables.bootstrap.min.js",
+      "PackagePath": "staticwebassets\\js\\DataTable\\dataTables.bootstrap.min.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\DataTable\\dataTables.min.js",
       "PackagePath": "staticwebassets\\js\\DataTable\\dataTables.min.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\DataTable\\ui-bootstrap-tpls.min.js",
+      "PackagePath": "staticwebassets\\js\\DataTable\\ui-bootstrap-tpls.min.js"
     },
     {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\ExpenseType\\Index.js",

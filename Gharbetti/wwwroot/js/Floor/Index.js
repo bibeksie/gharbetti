@@ -1,18 +1,30 @@
-﻿var app = angular.module('floorIndex', []);
+﻿var app = angular.module('floorIndex', ['ui.bootstrap','ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.FloorList = [];
+        $scope.FloorList =
+        {
+            records: [],
+        };
         $scope.Floor = {
             Id: 0,
             Name: "",
             IsActive: true,
         }
 
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
+
         $scope.init = function (floorList) {
 
-            $scope.FloorList = floorList;
+            $scope.FloorList.records = floorList;
+
+          //  $('#floorTable').DataTable();
         }
 
         $scope.onClickAdd = function () {
@@ -45,6 +57,8 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
 
             }
         }
+
+       
 
         $scope.onClickAddModal = function () {
             $scope.Floor = {

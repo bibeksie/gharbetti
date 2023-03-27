@@ -1,9 +1,11 @@
-﻿var app = angular.module('approveIndex', []);
+﻿var app = angular.module('approveIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.ApproveList = [];
+        $scope.ApproveList = {
+            records: [],
+        };
         $scope.Address = {
             AddressLine1: "",
             AddressLine2: "",
@@ -21,6 +23,14 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             Dob: "",
 
         }
+        $scope.dataTableOpt = {
+            //custom datatable options 
+            // or load data through ajax call also
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
 
         $scope.SubmitRemarks = {
             Id: "",
@@ -29,7 +39,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
 
         $scope.init = function (tenantList) {
 
-            $scope.ApproveList = tenantList;
+            $scope.ApproveList.records = tenantList;
         }
 
         $scope.onClickCloseModal = function () {

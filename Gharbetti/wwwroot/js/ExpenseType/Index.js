@@ -1,17 +1,25 @@
-﻿var app = angular.module('expenseTypeIndex', []);
+﻿var app = angular.module('expenseTypeIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.ExpenseTypeList = [];
+        $scope.ExpenseTypeList = {
+            records: [],
+        };
         $scope.ExpenseType = {
             Id: 0,
             Name: "",
         }
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
 
         $scope.init = function (expenseTypeList) {
 
-            $scope.ExpenseTypeList = expenseTypeList;
+            $scope.ExpenseTypeList.records = expenseTypeList;
         }
 
         $scope.onClickAdd = function () {

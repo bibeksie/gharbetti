@@ -1,13 +1,21 @@
-﻿var app = angular.module('roomIndex', []);
+﻿var app = angular.module('roomIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.RoomList = [];
+        $scope.RoomList = {
+            records: [],
+        };
         $scope.RoomTypeList = [];
         $scope.FloorType = [];
         $scope.RoomModalTitle = "";
 
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
         $scope.Room =
         {
             Id: 0,
@@ -35,7 +43,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
 
         $scope.init = function (roomList) {
 
-            $scope.RoomList = roomList;
+            $scope.RoomList.records = roomList;
             $scope.GetFloor();
             $scope.GetRoomType();
         }

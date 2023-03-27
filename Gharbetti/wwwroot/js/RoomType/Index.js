@@ -1,18 +1,27 @@
-﻿var app = angular.module('roomIndex', []);
+﻿var app = angular.module('roomIndex', ['ui.bootstrap', 'ui.utils']);
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.RoomList = [];
+        $scope.RoomList = {
+            records: [],
+        };
         $scope.Room = {
             Id: 0,
             Name: "",
             IsActive: true,
         }
 
+        $scope.dataTableOpt = {
+            "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
+            "aoSearchCols": [
+                null
+            ],
+        };
+
         $scope.init = function (roomList) {
 
-            $scope.RoomList = roomList;
+            $scope.RoomList.records = roomList;
         }
 
         $scope.onClickAdd = function () {

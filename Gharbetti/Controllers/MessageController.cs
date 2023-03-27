@@ -1,9 +1,11 @@
 ﻿using Gharbetti.Data;
 using Gharbetti.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
 
 namespace Gharbetti.Controllers
@@ -24,6 +26,7 @@ namespace Gharbetti.Controllers
 
         }
 
+        [Authorize(Roles = "admin")]
         [Route("index")]
         public async Task<IActionResult> Index()
         {
