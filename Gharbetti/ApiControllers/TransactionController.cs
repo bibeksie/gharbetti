@@ -48,7 +48,7 @@ namespace Gharbetti.ApiControllers
                     TransactionDate = tranDate,
                     RentPaid = model.RentPaid,
                     RoomId = int.Parse(roomId.Id),
-                    TenantId = Guid.Parse(_userId),
+                    TenantId = _userId,
                     Total = model.RentPaid + model.TransactionDetails.Sum(x => x.Amount),
                     Remarks = model.Remarks,
                     RentAmount = model.RentAmount,

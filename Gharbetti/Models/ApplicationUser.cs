@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Build.Framework;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gharbetti.Models
 {
@@ -27,9 +28,11 @@ namespace Gharbetti.Models
         public string? County { get; set; }
         [Required]
         public string Country { get; set; }
+        [ForeignKey("Room")]
         public int? RoomId { get; set; }
         public string? StayLength { get; set; }
 
         public string? ApproveRemarks { get; set; }
+        public Room Room { get; set; }
     }
 }

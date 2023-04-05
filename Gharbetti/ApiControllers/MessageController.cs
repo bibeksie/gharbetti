@@ -37,6 +37,7 @@ namespace Gharbetti.ApiControllers
                     Subject = model.Subject,
                     Body = model.Body,
                     PostedDate = DateTime.Now,
+                    HouseId = model.HouseId == 0? null : model.HouseId,
                 });
 
                 _db.SaveChanges();
@@ -61,7 +62,7 @@ namespace Gharbetti.ApiControllers
                         await _db.TenantMessages.AddAsync(new TenantMessage
                         {
                             MessageId = addedMessage.Entity.Id,
-                            TenantId = Guid.Parse(item.UserId),
+                            TenantId = item.UserId,
                             Status = 1
                         });
                     }
@@ -87,7 +88,7 @@ namespace Gharbetti.ApiControllers
                         await _db.TenantMessages.AddAsync(new TenantMessage
                         {
                             MessageId = addedMessage.Entity.Id,
-                            TenantId = Guid.Parse(item.UserId),
+                            TenantId = item.UserId,
                             Status = 1
                         });
                     }
@@ -117,6 +118,8 @@ namespace Gharbetti.ApiControllers
                 return Ok(new { Status = false, Message = "Data Not Found!!!" });
             }
 
+            editData.HouseId = editData.HouseId ?? 0;
+
             return Ok(new { Data = editData, Status = true });
 
         }
@@ -136,7 +139,7 @@ namespace Gharbetti.ApiControllers
                     {
                         savedEditData.Subject = model.Subject;
                         savedEditData.Body = model.Body;
-                        savedEditData.HouseId = model.HouseId;
+                        savedEditData.HouseId = model.HouseId == 0? null : model.HouseId;
 
                         _db.Message.Update(savedEditData);
 
@@ -167,7 +170,7 @@ namespace Gharbetti.ApiControllers
                                 await _db.TenantMessages.AddAsync(new TenantMessage
                                 {
                                     MessageId = savedEditData.Id,
-                                    TenantId = Guid.Parse(item.UserId),
+                                    TenantId = item.UserId,
                                     Status = 1
                                 });
                             }
@@ -193,7 +196,7 @@ namespace Gharbetti.ApiControllers
                                 await _db.TenantMessages.AddAsync(new TenantMessage
                                 {
                                     MessageId = savedEditData.Id,
-                                    TenantId = Guid.Parse(item.UserId),
+                                    TenantId = item.UserId,
                                     Status = 1
                                 });
                             }
@@ -268,7 +271,7 @@ namespace Gharbetti.ApiControllers
         {
             try
             {
-                var currentUserId = Guid.Parse(_userId);
+                var currentUserId = _userId;
                 var messageList = (from mess in _db.Message
                                    join tm in _db.TenantMessages on mess.Id equals tm.MessageId
                                    where tm.TenantId == currentUserId

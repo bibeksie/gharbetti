@@ -31,7 +31,7 @@ namespace Gharbetti.ApiControllers
                 Response = null,
                 ComplainDate = DateTime.Now,
                 Status = model.Status,
-                TenantId = Guid.Parse(_userId)
+                TenantId = _userId
             });
             _db.SaveChanges();
 

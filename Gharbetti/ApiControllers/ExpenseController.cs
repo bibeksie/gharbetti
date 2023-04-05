@@ -31,7 +31,7 @@ namespace Gharbetti.ApiControllers
         {
             try
             {
-                var transactionList = _db.Transactions.Where(x => x.TenantId == Guid.Parse(_userId)).ToList();
+                var transactionList = _db.Transactions.Where(x => x.TenantId == _userId).ToList();
                 if (filterData.FilterType == 0)
                 {
                     var sdate = DateTime.Parse(filterData.StartDateString);

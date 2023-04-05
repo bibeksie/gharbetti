@@ -42,12 +42,15 @@ namespace Gharbetti.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CleanSchedules");
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("CleanSchedules", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.Complain", b =>
@@ -71,12 +74,15 @@ namespace Gharbetti.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Complains");
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Complains", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.ExpenseType", b =>
@@ -93,7 +99,7 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExpenseTypes");
+                    b.ToTable("ExpenseTypes", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.Floor", b =>
@@ -113,7 +119,7 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Floors");
+                    b.ToTable("Floors", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.House", b =>
@@ -147,7 +153,7 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Houses");
+                    b.ToTable("Houses", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.HouseRoom", b =>
@@ -166,7 +172,11 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HouseRooms");
+                    b.HasIndex("HouseId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("HouseRooms", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.Message", b =>
@@ -181,7 +191,8 @@ namespace Gharbetti.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HouseId")
+                    b.Property<int?>("HouseId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PostedDate")
@@ -193,7 +204,9 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Message");
+                    b.HasIndex("HouseId");
+
+                    b.ToTable("Message", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.PaymentMode", b =>
@@ -210,7 +223,7 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentModes");
+                    b.ToTable("PaymentModes", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.Room", b =>
@@ -240,7 +253,9 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.HasIndex("FloorId");
+
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.RoomDetail", b =>
@@ -262,7 +277,11 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoomDetails");
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("RoomTypeId");
+
+                    b.ToTable("RoomDetails", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.RoomType", b =>
@@ -282,7 +301,7 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoomTypes");
+                    b.ToTable("RoomTypes", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.TenantMessage", b =>
@@ -299,25 +318,17 @@ namespace Gharbetti.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TenantMessages");
-                });
+                    b.HasIndex("MessageId");
 
-            modelBuilder.Entity("Gharbetti.Models.Tenet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasIndex("TenantId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tennets");
+                    b.ToTable("TenantMessages", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.Transaction", b =>
@@ -349,8 +360,9 @@ namespace Gharbetti.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -360,7 +372,11 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transactions");
+                    b.HasIndex("PaymentModeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("Gharbetti.Models.TransactionDetail", b =>
@@ -385,7 +401,11 @@ namespace Gharbetti.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionDetails");
+                    b.HasIndex("ExpenseId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("TransactionDetails", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -651,12 +671,154 @@ namespace Gharbetti.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RoomId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("StayLength")
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("RoomId");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.CleanSchedule", b =>
+                {
+                    b.HasOne("Gharbetti.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.Complain", b =>
+                {
+                    b.HasOne("Gharbetti.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.HouseRoom", b =>
+                {
+                    b.HasOne("Gharbetti.Models.House", "House")
+                        .WithMany()
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gharbetti.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.Message", b =>
+                {
+                    b.HasOne("Gharbetti.Models.House", "House")
+                        .WithMany()
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.Room", b =>
+                {
+                    b.HasOne("Gharbetti.Models.Floor", "Floor")
+                        .WithMany()
+                        .HasForeignKey("FloorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.RoomDetail", b =>
+                {
+                    b.HasOne("Gharbetti.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gharbetti.Models.RoomType", "RoomType")
+                        .WithMany()
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("RoomType");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.TenantMessage", b =>
+                {
+                    b.HasOne("Gharbetti.Models.Message", "Message")
+                        .WithMany()
+                        .HasForeignKey("MessageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gharbetti.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Message");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.Transaction", b =>
+                {
+                    b.HasOne("Gharbetti.Models.PaymentMode", "PaymentMode")
+                        .WithMany()
+                        .HasForeignKey("PaymentModeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gharbetti.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PaymentMode");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.TransactionDetail", b =>
+                {
+                    b.HasOne("Gharbetti.Models.ExpenseType", "Expense")
+                        .WithMany()
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gharbetti.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Expense");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -708,6 +870,17 @@ namespace Gharbetti.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Gharbetti.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Gharbetti.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
                 });
 #pragma warning restore 612, 618
         }

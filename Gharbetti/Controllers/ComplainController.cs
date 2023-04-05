@@ -23,7 +23,7 @@ namespace Gharbetti.Controllers
         {
             if (this.User.IsInRole("tenant"))
             {
-                var complainList = _db.Complains.Where(x => x.TenantId == Guid.Parse(_userId)).ToList();
+                var complainList = _db.Complains.Where(x => x.TenantId == _userId).ToList();
                 ViewData["Complain"] = complainList;
             }
             else if (this.User.IsInRole("admin"))

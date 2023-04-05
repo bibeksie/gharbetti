@@ -9,7 +9,6 @@ namespace Gharbetti.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
-        public DbSet<Tenet> Tennets { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Room> Rooms { get; set; }

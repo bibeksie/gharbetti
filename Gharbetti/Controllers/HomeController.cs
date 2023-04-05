@@ -48,7 +48,7 @@ namespace Gharbetti.Controllers
             }
             else if (this.User.IsInRole("tenant"))
             {
-                var currentUserId = Guid.Parse(_userId);
+                var currentUserId = _userId;
                 var messageList = (from mess in _db.Message
                                    join tm in _db.TenantMessages on mess.Id equals tm.MessageId
                                    where tm.TenantId == currentUserId

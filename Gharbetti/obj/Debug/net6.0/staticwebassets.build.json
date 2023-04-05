@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "S11flU3tdtSEhhGpLmuoi4glKkfG0RFKTBGBQE5kLsY=",
+  "Hash": "Q2T74th3OWg7xisW49gVnDyenMkkVVeXNsRMGKnXRaw=",
   "Source": "Gharbetti",
   "BasePath": "_content/Gharbetti",
   "Mode": "Default",
@@ -2786,6 +2786,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\638143351014350865.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638156267059751885.png",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "uploads/638156267059751885.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\638156267059751885.png"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638156267059882323.jpg",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "uploads/638156267059882323.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\638156267059882323.jpg"
     }
   ]
 }

@@ -23,7 +23,7 @@ namespace Gharbetti.Controllers
         [Route("index")]
         public async Task<IActionResult> Index()
         {
-            var transactionList = _db.Transactions.Where(x => x.TenantId == Guid.Parse(_userId)).ToList();
+            var transactionList = _db.Transactions.Where(x => x.TenantId == _userId).ToList();
 
             var transactionAllList = (from t in transactionList
                                      join p in _db.PaymentModes on t.PaymentModeId equals p.Id

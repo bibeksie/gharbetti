@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gharbetti.Models
 {
@@ -6,9 +7,11 @@ namespace Gharbetti.Models
     {
         [Key]
         public int Id { get; set; }
-        public int HouseId { get; set; }
+        [ForeignKey("House")]
+        public int? HouseId { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime PostedDate { get; set; }
+        public House House { get; set; }
     }
 }
