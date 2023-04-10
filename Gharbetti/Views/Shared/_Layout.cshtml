@@ -3,12 +3,11 @@
         margin-bottom: 80px;
     }
 
-    body { padding-top: 70px; }
+    body {
+        padding-top: 70px;
+    }
 
-
-    
-}
-
+    }
 </style>
 <!DOCTYPE html>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -44,36 +43,31 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
-                        <li>
-                            <a asp-area="" asp-controller="Transaction" asp-action="Index">Transaction</a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Expense" asp-action="Index">Expense Report</a>
-                        </li>
 
 
-                        <li>
-                            <a asp-area="" asp-controller="Message" asp-action="Index">Message</a>
-                        </li>
+
+
                         @if (ViewContext.HttpContext.User.IsInRole("admin"))
                         {
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                       role="button" aria-expanded="false">Setup Detail<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a asp-area="" asp-controller="House" asp-action="Index">House</a>
-
-                                        </li>
-                                        <li>
-                                            <a asp-area="" asp-controller="Room" asp-action="Index">Room</a>
-                                        </li>
-                                        <li>
-                                            <a asp-area="" asp-controller="Floor" asp-action="Index">Floor</a>
-                                        </li>
-                                        <li>
-                                            <a asp-area="" asp-controller="RoomType" asp-action="Index">Room Type</a>
-                                        </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-expanded="false">Setup Detail<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a asp-area="" asp-controller="House" asp-action="Index">House</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Message" asp-action="Index">Message</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Room" asp-action="Index">Room</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Floor" asp-action="Index">Floor</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="RoomType" asp-action="Index">Room Type</a>
+                                    </li>
                                     <li>
                                         <a asp-area="" asp-controller="ExpenseType" asp-action="Index">Expense Type</a>
                                     </li>
@@ -84,61 +78,76 @@
 
 
 
-                                    </ul>
-                                </li>
+                                </ul>
+                            </li>
 
-                                <li>
-                                    <a asp-area="" asp-controller="Approve" asp-action="Index">Approve</a>
-                                </li>
+                            <li>
+                                <a asp-area="" asp-controller="Approve" asp-action="Index">Approve</a>
+                            </li>
 
-                                <li>
-                                    <a asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
-                                </li>
-                                 <li>
-                                    <a asp-area="" asp-controller="StripePayment" asp-action="Index">Stripe Payment</a>
-                                </li>
+                            <li>
+                                <a asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="StripePayment" asp-action="Index">Stripe Payment</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Transaction" asp-action="Index">Transaction</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Expense" asp-action="Index">Expense Report</a>
+                            </li>
                         }
 
                         @if (ViewContext.HttpContext.User.IsInRole("tenant"))
                         {
-                                <li>
-                                    <a  asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
-                                </li>
-                                <li>
-                                    <a  asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
-                                </li>
+                            <li>
+                                <a asp-area="" asp-controller="Message" asp-action="Index">Message</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Transaction" asp-action="Index">Transaction</a>
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="Expense" asp-action="Index">Expense Report</a>
+                            </li>
                         }
 
-        </ul>
-        <!-- Right NavBar ------------------------- -->
-        <ul class="nav navbar-nav navbar-right">
-            <partial name="_LoginPartial"></partial>
-        </ul>
-        </div>
-        </div>
-        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
+                    </ul>
+                    <!-- Right NavBar ------------------------- -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <partial name="_LoginPartial"></partial>
+                    </ul>
+                </div>
+            </div>
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </nav>
 
     </header>
     <div class="container">
         @RenderBody()
-       
+
     </div>
 
 
     <nav class="navbar-wrapper navbar-inverse navbar-fixed-bottom">
-  <div class="container-fluid">
-            &copy; 2023 - Gharbetti 
-  </div>
-</nav>
+        <div class="container-fluid">
+            &copy; 2023 - Gharbetti
+        </div>
+    </nav>
     @*    <footer class="border-top footer text-muted">
     </footer>*@
 </body>

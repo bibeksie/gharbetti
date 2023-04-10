@@ -22,6 +22,7 @@ namespace Gharbetti.ApiControllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] RoomViewModel model)
         {
+            var dbTran = _db.Database.BeginTransaction();
             try
             {
                 var addedRoom = await _db.Rooms.AddAsync(new Room
@@ -32,7 +33,7 @@ namespace Gharbetti.ApiControllers
                     RentAmount = model.RentAmount,
                     SquareFootage = model.SquareFootage,
                 });
-
+                _db.SaveChanges();
                 foreach (var item in model.RoomDetails)
                 {
                     await _db.RoomDetails.AddAsync(new RoomDetail
@@ -44,11 +45,12 @@ namespace Gharbetti.ApiControllers
                 }
 
                 _db.SaveChanges();
+                dbTran.Commit();
                 return Ok(new { Data = model, Status = true, Message = "Room saved Sucessfully!!!" });
             }
             catch (Exception)
             {
-                _db.Dispose();
+                dbTran.Rollback();
                 return Ok(new { Data = model, Status = false, Message = "Error while Saving!!!" });
             }
         }
@@ -93,6 +95,7 @@ namespace Gharbetti.ApiControllers
         [Route("Edit")]
         public async Task<IActionResult> Edit([FromBody] RoomViewModel model)
         {
+            var dbTran = _db.Database.BeginTransaction();
             try
             {
                 var savedEditData = await _db.Rooms.FirstOrDefaultAsync(x => x.Id == model.Id);
@@ -105,12 +108,14 @@ namespace Gharbetti.ApiControllers
                     savedEditData.FloorId = model.FloorId;
 
                     _db.Rooms.Update(savedEditData);
+                    _db.SaveChanges();
 
                     var deleteData = _db.RoomDetails.Where(x => x.Id == model.Id).ToList();
                     if (deleteData.Count > 0)
                     {
                         _db.RoomDetails.RemoveRange(deleteData);
                     }
+                    _db.SaveChanges();
 
                     foreach (var item in model.RoomDetails)
                     {
@@ -124,10 +129,12 @@ namespace Gharbetti.ApiControllers
                 }
 
                 _db.SaveChanges();
+                dbTran.Commit();
                 return Ok(new { Data = model, Status = true, Message = "Data Updated Successfully!!!" });
             }
             catch (Exception ex)
             {
+                dbTran.Rollback();
                 return Ok(new { Data = model, Status = false, Message = "Error Occured" });
             }
         }

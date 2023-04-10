@@ -30,6 +30,11 @@
         </table>
     }
 
+    @if (!string.IsNullOrEmpty(role) && role == "admin")
+    {
+        <img src="~/image/admin.png" alt="Italian Trulli">
+    }
+
 </div>
 
 <script type="text/javascript">
