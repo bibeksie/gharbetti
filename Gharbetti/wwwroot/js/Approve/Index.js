@@ -1,4 +1,6 @@
-﻿var app = angular.module('approveIndex', ['ui.bootstrap', 'ui.utils']);
+﻿
+var app = angular.module('approveIndex', ['ui.bootstrap', 'ui.utils']);
+
 
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
@@ -15,6 +17,10 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             County: "",
             Country: ""
         }
+
+       
+
+
 
         $scope.PersonalDetail = {
             Email: "",
@@ -70,22 +76,6 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             $('#addModal').modal('show');
         }
 
-        $scope.onClickApprove = function (id) {
-
-            if (confirm("Do you really want to Approve this Tenant Registration?")) {
-                $http.get(`/api/Approve/register/?id=${id}`).then(function (responsedata) {
-                    debugger;
-                    console.log(responsedata.data);
-                    if (responsedata.data.Status) {
-                        location.reload();
-                    }
-                    else {
-                        alert("Error Occured");
-                    }
-                });
-            }
-        }
-
 
         $scope.onClickReSubmit = function (id) {
             $scope.SubmitRemarks = {
@@ -128,9 +118,28 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             $scope.PersonalDetail.PhoneNumber = data.PhoneNumber
             $scope.PersonalDetail.MobileNumber = data.MobileNumber
             $scope.PersonalDetail.Dob = data.Dob
-               
+
             $('#userModal').modal('show');
         }
+
+
+        $scope.onClickApprove = function (id) {
+
+            if (confirm("Do you really want to Approve this Tenant Registration?")) {
+                $http.get(`/api/Approve/register/?id=${id}`).then(function (responsedata) {
+                    debugger;
+                    console.log(responsedata.data);
+                    if (responsedata.data.Status) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Error Occured");
+                    }
+                });
+            }
+        }
+
+       
 
 
     }]);

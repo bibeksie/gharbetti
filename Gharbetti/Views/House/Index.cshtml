@@ -117,8 +117,20 @@
                             <input type="text" class="form-control" ng-model="House.Address" placeholder="Address" autocomplete="off" />
                         </div>
                         <div class="g-col-6 g-col-md-4">
+                            <label class="col-form-label">Postal Code:</label>
+                            <input type="text" class="form-control" ng-model="House.PostalCode" placeholder="Postal Code" autocomplete="off" ng-change="onLoadStreet()" />
+@*                            <button class="btn btn-primary" ng-click="onLoadStreet()">Load</button>
+*@                        </div>
+                        <div class="g-col-6 g-col-md-4">
                             <label class="col-form-label">Street:</label>
-                            <input type="text" class="form-control" ng-model="House.Street" placeholder="Street" autocomplete="off" />
+                            <ui-select theme="bootstrap" ng-model="House.Street.selected" close-on-select="true" style="width: 300px;">
+                                <ui-select-match placeholder="Select a Street">
+                                    {{$select.selected.line_1}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="p1 in (StreetList | filter: $select.search) track by p1.line_1">
+                                    <span ng-bind="p1.line_1"></span>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                         <div class="g-col-6 g-col-md-4">
                             <label class="col-form-label">Rent Amount:</label>

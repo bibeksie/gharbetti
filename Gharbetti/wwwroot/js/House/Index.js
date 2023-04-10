@@ -9,18 +9,23 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         $scope.RoomList = [];
         $scope.HouseModalTitle = "";
         $scope.MultipleRoom = [];
+        $scope.StreetList = [];
         $scope.dataTableOpt = {
             "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
             "aoSearchCols": [
                 null
             ],
         };
+        var timeoutPromise;
+
         $scope.House =
         {
             Id: 0,
             Name: "",
             Address: "",
-            Street: "",
+            Street: {
+                selected: {}
+            },
             SquareFootage: "",
             Remarks: "",
             RentAmount: 0,
@@ -61,7 +66,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 data = $scope.House;
                 data.HouseRoomViewModels = $scope.House.HouseRooms;
 
-                
+
 
                 $http.post('/api/House/Edit', data).then(function (responsedata) {
                     debugger;
@@ -85,7 +90,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 Id: 0,
                 Name: "",
                 Address: "",
-                Street: "",
+                Street: {
+                    selected: {}
+                },
                 SquareFootage: "",
                 Remarks: "",
                 RentAmount: 0,
@@ -131,7 +138,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             });
 
         }
- 
+
         $scope.Delete = function (id) {
             $http({
                 url: "/api/House/Delete",
@@ -156,6 +163,27 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                     $scope.RoomList = responsedata.data.Data;
                 }
             });
+        }
+
+        $scope.onLoadStreet = function () {
+
+            $timeout.cancel(timeoutPromise);
+            timeoutPromise = $timeout(function () {
+                let data = {
+                    postcode: $scope.House.PostalCode,
+                    key: 'f22c4-5ef04-4b5b2-08e56',
+                    response: 'data_formatted'
+                }
+                $scope.StreetList = [];
+                let url = "//pcls1.craftyclicks.co.uk/json/rapidaddress";
+
+                $http.post(url, data).then(function (responsedata) {
+                    var result = responsedata.data;
+                    if (result.error_code != "0002") {
+                    $scope.StreetList = result.delivery_points;
+                    }
+                });
+            }, 1000);
         }
 
     }]);

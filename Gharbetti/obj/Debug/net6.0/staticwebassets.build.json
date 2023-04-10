@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Q2T74th3OWg7xisW49gVnDyenMkkVVeXNsRMGKnXRaw=",
+  "Hash": "YHfcusJ1cZuCdLLEKVRcJT/VpvY3X7NfxBRR5DXHvH4=",
   "Source": "Gharbetti",
   "BasePath": "_content/Gharbetti",
   "Mode": "Default",
@@ -1547,6 +1547,40 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Stripe\\stripe.min.js",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "js/Stripe/stripe.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Stripe\\stripe.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\StripePayment\\Index.js",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "js/StripePayment/Index.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\StripePayment\\Index.js"
+    },
+    {
       "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Transaction\\Index.js",
       "SourceId": "Gharbetti",
       "SourceType": "Discovered",
@@ -2820,6 +2854,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\638156267059882323.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638165026744149487.jpg",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "uploads/638165026744149487.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\638165026744149487.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638165026744245016.png",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "uploads/638165026744245016.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\638165026744245016.png"
     }
   ]
 }

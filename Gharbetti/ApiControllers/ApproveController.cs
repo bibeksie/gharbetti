@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using System.Data;
 
 namespace Gharbetti.ApiControllers
@@ -40,8 +41,24 @@ namespace Gharbetti.ApiControllers
 
                 await _userManager.RemoveFromRoleAsync(user, pendingCurrentRole.Name);
                 await _userManager.AddToRoleAsync(user, tenantRole.Name);
+
+                StripeConfiguration.ApiKey = "sk_test_51MrMYfG57wLeiTAQci6zNIOYQS40rPL4IfQawYqzWZNfTdPDA3enyrfVLFrQ8LqNHrTiE0eH8lMYpVJaJRmmwNJU00uqBJ2Qv2";
+                var applicationUser = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == user.Id);
+                var options = new CustomerCreateOptions
+                {
+                    Name = applicationUser.FirstName + " " + applicationUser.LastName,
+                    Email = user.Email,
+            
+                };
+
+                var service = new CustomerService();
+                Customer customer = service.Create(options);
+
+                applicationUser.CustomerId = customer.Id;
+                _db.ApplicationUsers.Update(applicationUser);
+
                 dbTran.Commit();
-                return Ok(new { Status = true, Message = "Role Changed Sucessfulle" });
+                return Ok(new { Status = true, Message = "Role Changed Sucessfully and Customer Created" });
             }
             catch (Exception ex)
             {

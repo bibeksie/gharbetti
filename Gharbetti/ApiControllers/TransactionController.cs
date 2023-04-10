@@ -4,6 +4,7 @@ using Gharbetti.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using System.Security.Claims;
 
 namespace Gharbetti.ApiControllers
@@ -36,23 +37,49 @@ namespace Gharbetti.ApiControllers
 
                 var roomId = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == _userId);
 
-                if(roomId == null)
+                if (roomId == null)
                 {
                     return Ok(new { Status = false, Message = "Error while getting room" });
                 }
 
+                var totalAmount = model.RentPaid + model.TransactionDetails.Sum(x => x.Amount);
+                StripeConfiguration.ApiKey = "sk_test_51MrMYfG57wLeiTAQci6zNIOYQS40rPL4IfQawYqzWZNfTdPDA3enyrfVLFrQ8LqNHrTiE0eH8lMYpVJaJRmmwNJU00uqBJ2Qv2";
+                var paymentMethodId = await _db.PaymentModes.FirstOrDefaultAsync(x => x.Id == model.PaymentModeId);
+
+                var options = new PaymentIntentCreateOptions
+                {
+                    Amount = Convert.ToInt64(totalAmount * 100),
+                    Currency = "gbp",
+                    PaymentMethod = paymentMethodId.StripePayment,
+                    Customer = roomId.CustomerId,
+                };
+                var service = new PaymentIntentService();
+                var payment = service.Create(options);
+
+
+                var confirmptions = new PaymentIntentConfirmOptions
+                {
+                    PaymentMethod = paymentMethodId.StripePayment,
+                };
+                var serviceToConfirm = new PaymentIntentService();
+                service.Confirm(
+                  payment.Id,
+                  confirmptions);
+
+                var presentTenantId = _userId.ToString();
                 var addedTransaction = await _db.Transactions.AddAsync(new Transaction
                 {
                     StartDate = startDate,
                     EndDate = endDate,
                     TransactionDate = tranDate,
                     RentPaid = model.RentPaid,
-                    RoomId = int.Parse(roomId.Id),
-                    TenantId = _userId,
-                    Total = model.RentPaid + model.TransactionDetails.Sum(x => x.Amount),
+                    RoomId = roomId.RoomId.Value,
+                    TenantId = presentTenantId,
+                    Total = totalAmount,
                     Remarks = model.Remarks,
                     RentAmount = model.RentAmount,
                     PaymentModeId = model.PaymentModeId,
+                    StripePaymentId = payment.Id
                 });
                 _db.SaveChanges();
 
@@ -129,6 +156,7 @@ namespace Gharbetti.ApiControllers
             try
             {
                 var savedEditData = await _db.Transactions.FirstOrDefaultAsync(x => x.Id == model.Id);
+                var paymentMethodId = await _db.PaymentModes.FirstOrDefaultAsync(x => x.Id == model.PaymentModeId);
 
                 var startDate = DateTime.Parse(model.StartDateString);
                 var endDate = DateTime.Parse(model.EndDateString);
@@ -136,6 +164,43 @@ namespace Gharbetti.ApiControllers
 
                 if (savedEditData != null)
                 {
+
+                    if (savedEditData.PaymentModeId == model.PaymentModeId)
+                    {
+                        var options = new PaymentIntentUpdateOptions
+                        {
+                            Amount = Convert.ToInt64((model.RentPaid + model.TransactionDetails.Sum(x => x.Amount)) * 100)
+                        };
+
+                        var service = new PaymentIntentService();
+                        service.Update(
+                          savedEditData.StripePaymentId,
+                          options);
+                    }
+                    else if(!String.IsNullOrEmpty(paymentMethodId.StripePayment) && savedEditData.PaymentModeId != model.PaymentModeId)
+                    {
+                        var options = new PaymentIntentUpdateOptions
+                        {
+                            Amount = Convert.ToInt64((model.RentPaid + model.TransactionDetails.Sum(x => x.Amount)) * 100),
+                            PaymentMethod = paymentMethodId.StripePayment,
+                        };
+
+                        var service = new PaymentIntentService();
+                        service.Update(
+                          savedEditData.StripePaymentId,
+                          options);
+
+                        var confirmoptions = new PaymentIntentConfirmOptions
+                        {
+                            PaymentMethod = paymentMethodId.StripePayment,
+                        };
+                        var service2 = new PaymentIntentService();
+
+                        service2.Confirm(
+                          savedEditData.StripePaymentId,
+                          confirmoptions);
+                    }
+
                     savedEditData.Remarks = model.Remarks;
                     savedEditData.RentPaid = model.RentPaid;
                     savedEditData.RentAmount = model.RentAmount;
@@ -185,7 +250,7 @@ namespace Gharbetti.ApiControllers
             var dbTran = _db.Database.BeginTransaction();
             if (editData != null)
             {
-                
+
                 _db.Transactions.Remove(editData);
 
                 var allTransactionDetail = await _db.TransactionDetails.Where(x => x.TransactionId == id).ToListAsync();

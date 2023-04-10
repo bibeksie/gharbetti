@@ -9,6 +9,7 @@ namespace Gharbetti.Models
         
         [Required]
         public string Name { get; set; }
+        public string? StripePayment { get; set; }
         
     }
 }

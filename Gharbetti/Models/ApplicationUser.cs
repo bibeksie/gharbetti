@@ -33,6 +33,8 @@ namespace Gharbetti.Models
         public string? StayLength { get; set; }
 
         public string? ApproveRemarks { get; set; }
+        public string? CustomerId { get; set; }
         public Room Room { get; set; }
+
     }
 }

@@ -1,10 +1,11 @@
+using Stripe.Issuing;
 using System.ComponentModel.DataAnnotations;
 
 namespace Gharbetti.ViewModels
 {
     public class TransactionViewModel
     {
-        public TransactionViewModel() 
+        public TransactionViewModel()
         {
             TransactionDetails = new List<TransactionDetailViewModel>();
         }
@@ -18,10 +19,21 @@ namespace Gharbetti.ViewModels
         public DateTime EndDate { get; set; }
         public decimal RentAmount { get; set; }
         public decimal RentPaid { get; set; }
-        public string? TransactionDateString { get; set; } 
-        public string? StartDateString { get; set; } 
-        public string? EndDateString { get; set; } 
+        public string? TransactionDateString { get; set; }
+        public string? StartDateString { get; set; }
+        public string? EndDateString { get; set; }
         public int PaymentModeId { get; set; }
-        public List<TransactionDetailViewModel> TransactionDetails { get; set; } 
+        public List<TransactionDetailViewModel> TransactionDetails { get; set; }
+    }
+
+    public class StripePaymentList
+    {
+        public string Tenant { get; set; }
+        public string Amount { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get;set; }
+        public string TransactionDate { get;set; }
+        public string PaymentMethod { get; set; }
+
     }
 }

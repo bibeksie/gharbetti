@@ -19,6 +19,7 @@ namespace Gharbetti.Models
         public decimal RentPaid { get; set; }
         [ForeignKey("PaymentMode")]
         public int PaymentModeId { get; set; }  
+        public string? StripePaymentId { get; set; }
         public PaymentMode PaymentMode { get; set; }
         public ApplicationUser User { get; set; }   
 

@@ -97,6 +97,9 @@
                                 <li>
                                     <a asp-area="" asp-controller="CleanSchedule" asp-action="Index">Cleaning Schedule</a>
                                 </li>
+                                 <li>
+                                    <a asp-area="" asp-controller="StripePayment" asp-action="Index">Stripe Payment</a>
+                                </li>
                         }
 
                         @if (ViewContext.HttpContext.User.IsInRole("tenant"))

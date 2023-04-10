@@ -295,3 +295,4 @@ C:\Users\user\source\repos\Gharbetti\Gharbetti\obj\Debug\net6.0\refint\Gharbetti
 C:\Users\user\source\repos\Gharbetti\Gharbetti\obj\Debug\net6.0\Gharbetti.pdb
 C:\Users\user\source\repos\Gharbetti\Gharbetti\obj\Debug\net6.0\Gharbetti.genruntimeconfig.cache
 C:\Users\user\source\repos\Gharbetti\Gharbetti\obj\Debug\net6.0\ref\Gharbetti.dll
+C:\Users\user\source\repos\Gharbetti\Gharbetti\bin\Debug\net6.0\Stripe.net.dll
