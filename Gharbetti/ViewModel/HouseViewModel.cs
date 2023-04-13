@@ -11,6 +11,7 @@ namespace Gharbetti.ViewModels
         public string? SquareFootage { get; set; }
         public string? Remarks { get; set; }
         public decimal? RentAmount { get; set; }
+        public string? PostalCode { get; set; }
         public List<HouseRoomViewModel> HouseRoomViewModels { get; set; } 
     }
 }

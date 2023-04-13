@@ -35,6 +35,7 @@ namespace Gharbetti.ApiControllers
                         Remarks = model.Remarks,
                         RentAmount = model.RentAmount,
                         SquareFootage = model.SquareFootage,
+                        PostalCode = model.PostalCode,
                     });
                     _db.SaveChanges();
 
@@ -86,6 +87,7 @@ namespace Gharbetti.ApiControllers
                 Remarks = editData.Remarks,
                 RentAmount = editData.RentAmount,
                 SquareFootage = editData.SquareFootage,
+                PostalCode = editData.PostalCode,
                 HouseRoomViewModels = houserooms
             };
 
@@ -117,6 +119,7 @@ namespace Gharbetti.ApiControllers
                         savedEditData.Address = model.Address;
                         savedEditData.Name = model.Name;
                         savedEditData.Street = model.Street;
+                        savedEditData.PostalCode = model.PostalCode;
 
                         _db.Houses.Update(savedEditData);
                         _db.SaveChanges();
@@ -132,7 +135,7 @@ namespace Gharbetti.ApiControllers
                             await _db.HouseRooms.AddAsync(new HouseRoom
                             {
                                 HouseId = model.Id,
-                                RoomId = item.RoomId,
+                                RoomId = item.Id,
                             });
                             _db.SaveChanges();
                         }

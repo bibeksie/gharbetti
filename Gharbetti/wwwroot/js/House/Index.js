@@ -47,8 +47,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         $scope.onClickAdd = function () {
 
             if ($scope.House.Id == "") {
-                data = $scope.House;
+                data = angular.copy($scope.House);
                 data.HouseRoomViewModels = $scope.Multiple.rooms;
+                data.Street = $scope.House.Street.selected.line_1;
 
                 $http.post("/api/House/Add", data).then(function (responsedata) {
                     debugger;
@@ -63,10 +64,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 });
             }
             else {
-                data = $scope.House;
-                data.HouseRoomViewModels = $scope.House.HouseRooms;
-
-
+                data = angular.copy($scope.House);
+                data.Street = $scope.House.Street.selected.line_1;
+                data.HouseRoomViewModels = $scope.Multiple.rooms;
 
                 $http.post('/api/House/Edit', data).then(function (responsedata) {
                     debugger;
@@ -120,6 +120,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 if (responsedata.data) {
                     var data = responsedata.data.Data;
                     $scope.House = data;
+                    $scope.House.Street = {
+                        selected: {}
+                    };
 
                     if ($scope.House.HouseRoomViewModels) {
                         angular.forEach($scope.House.HouseRoomViewModels, function (value) {

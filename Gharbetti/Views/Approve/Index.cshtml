@@ -36,12 +36,12 @@
                     <tr ng-repeat="data in ApproveList.records">
                         <td>{{ data.FirstName }} {{ data.MiddleName }} {{ data.LastName }}</td>
                       
-                        <th>
+                        <td>
                             <button type="button" class="btn btn-primary" ng-click="onClickDetail(data.Id)">UserDetail</button>
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             <button type="button" class="btn btn-primary" ng-click="onClickAddress(data.Id)">Address</button>
-                        </th>
+                        </td>
                         <td>{{ data.RoomName}}</td>
                         <td>{{ data.StayLength}}</td>
                         <td><a href="~/uploads/{{data.Identification}}" target="_blank">View</a></td>
