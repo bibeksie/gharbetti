@@ -3,7 +3,7 @@
 
 app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
     function ($scope, $filter, $compile, $http, $rootScope, $timeout, $q, $log, $window) {
-        $scope.ComplainScheduleList = {
+        $scope.CleanScheduleList = {
             records: [],
         };
 

@@ -64,7 +64,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 Country: ""
             }
 
-            let data = $scope.ApproveList.find(x => x.Id == id);
+            let data = $scope.ApproveList.records.find(x => x.Id == id);
 
             $scope.Address.AddressLine1 = data.AddressLine1;
             $scope.Address.AddressLine2 = data.AddressLine2;
@@ -93,6 +93,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                     debugger;
                     console.log(responsedata.data);
                     if (responsedata.data.Status) {
+                        alert(responsedata.data.Message);
                         location.reload();
                     }
                     else {
@@ -112,7 +113,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
 
             }
 
-            let data = $scope.ApproveList.find(x => x.Id == id);
+            let data = $scope.ApproveList.records.find(x => x.Id == id);
 
             $scope.PersonalDetail.Email = data.Email
             $scope.PersonalDetail.PhoneNumber = data.PhoneNumber
@@ -130,6 +131,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                     debugger;
                     console.log(responsedata.data);
                     if (responsedata.data.Status) {
+                        alert(responsedata.data.Message);
                         location.reload();
                     }
                     else {

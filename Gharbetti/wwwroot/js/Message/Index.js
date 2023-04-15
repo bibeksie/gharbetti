@@ -87,7 +87,7 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
 
         $scope.ShowMessage = function (id) {
             $scope.BodyMessage = "";
-            var data = $scope.MessageList.find(x => x.Id == id);
+            var data = $scope.MessageList.records.find(x => x.Id == id);
             $scope.BodyMessage = data.Body;
             $('#messageModal').modal('show');
         }

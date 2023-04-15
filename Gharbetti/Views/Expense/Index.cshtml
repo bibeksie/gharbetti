@@ -17,7 +17,7 @@
         <div class="box-header with-border">
 
             <div ng-show="IsVisible.Admin">
-                <div class="g-col-6 g-col-md-4">
+                <div class="col-md-2 form-group">
                     <label class="col-form-label">Report Type:</label>
                     <select class="form-control" ng-model="ReportType">
                         <option value="0">Transaction Report</option>
@@ -27,7 +27,7 @@
             </div>
 
             <div ng-show="ReportType == '0'">
-                <div class="g-col-6 g-col-md-4">
+                <div class="col-md-2 form-group">
                     <label class="col-form-label">Filter Type:</label>
                     <select class="form-control" ng-model="FilterData.FilterType" ng-change="onChangeFilterType()">
                         <option value="0">Date Range</option>
@@ -39,7 +39,7 @@
 
 
             <div ng-hide="monthWise">
-                <div class="g-col-6 g-col-md-4">
+                <div class="col-md-2 form-group">
                     <label class="col-form-label">Months:</label>
                     <select class="form-control" ng-model="FilterData.Month">
                         <option value="0" selected>All</option>
@@ -57,7 +57,7 @@
                         <option value="12">Dec</option>
                     </select>
                 </div>
-                <div class="g-col-6 g-col-md-4">
+                <div class="col-md-2 form-group">
                     <label class="col-form-label">Year:</label>
                     <select class="form-control" ng-model="FilterData.Year">
                         <option value="2023" selected>2023</option>
@@ -67,18 +67,18 @@
             </div>
 
             <div ng-hide="filterRange">
-                <div class="g-col-6 g-col-md-4">
+                <div class="col-md-2 form-group">
                     <label class="col-form-label">Start Date:</label>
                     <input type="text" id="modalStartDate" class="form-control datepicker" ng-model="FilterData.StartDateString" placeholder="Start Date" autocomplete="off" />
                 </div>
-                <div class="g-col-6 g-col-md-4">
+                <div class="col-md-2 form-group">
                     <label class="col-form-label">End Date:</label>
                     <input type="text" id="modalEndDate" class="form-control datepicker" ng-model="FilterData.EndDateString" placeholder="End Date" autocomplete="off" />
                 </div>
             </div>
 
 
-            <button type="button" class="btn btn-primary" ng-click="onClickFilter()">Load</button>
+            <button type="button" style="margin-top : 25px;" class="btn btn-primary" ng-click="onClickFilter()">Load</button>
 
             <div ng-show="IsVisible.Tenant">
 

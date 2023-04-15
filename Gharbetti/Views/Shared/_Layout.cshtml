@@ -100,9 +100,9 @@
 
                         @if (ViewContext.HttpContext.User.IsInRole("tenant"))
                         {
-                            <li>
+                           @* <li>
                                 <a asp-area="" asp-controller="Message" asp-action="Index">Message</a>
-                            </li>
+                            </li>*@
                             <li>
                                 <a asp-area="" asp-controller="Complain" asp-action="Index">Complain</a>
                             </li>
