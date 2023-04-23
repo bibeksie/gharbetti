@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\image\\admin.png"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\image\\login.jpg",
+      "PackagePath": "staticwebassets\\image\\login.jpg"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\Angularjs\\angular-sanitize.min.js",
       "PackagePath": "staticwebassets\\js\\Angularjs\\angular-sanitize.min.js"
     },

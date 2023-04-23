@@ -174,7 +174,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             timeoutPromise = $timeout(function () {
                 let data = {
                     postcode: $scope.House.PostalCode,
-                    key: 'f22c4-5ef04-4b5b2-08e56',
+                    key: 'a418b-4a0ca-7f08d-08edd',
                     response: 'data_formatted'
                 }
                 $scope.StreetList = [];
