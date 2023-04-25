@@ -22,8 +22,8 @@ namespace Gharbetti.Controllers
             var pendingTenantList = (from au in _db.ApplicationUsers
                                      join ur in _db.UserRoles on au.Id equals ur.UserId
                                      join r in _db.Roles on ur.RoleId equals r.Id
-                                     join ro in _db.Rooms on au.RoomId equals ro.Id
-                                     join hr in _db.HouseRooms on ro.Id equals hr.RoomId
+                                     join hr in _db.HouseRooms on au.HouseRoomId equals hr.Id
+                                     join ro in _db.Rooms on hr.RoomId equals ro.Id
                                      join h in _db.Houses on hr.HouseId equals h.Id
                                      where r.Name == StaticDetail.Role_PendingTenant
                                      select new { 

@@ -42,6 +42,7 @@ namespace Gharbetti.ApiControllers
                     return Ok(new { Status = false, Message = "Error while getting room" });
                 }
 
+                var roomDetail = await _db.Rooms.FirstOrDefaultAsync(x => x.Id == roomId.HouseRoomId);
                 var totalAmount = model.RentPaid + model.TransactionDetails.Sum(x => x.Amount);
                 StripeConfiguration.ApiKey = "sk_test_51MrMYfG57wLeiTAQci6zNIOYQS40rPL4IfQawYqzWZNfTdPDA3enyrfVLFrQ8LqNHrTiE0eH8lMYpVJaJRmmwNJU00uqBJ2Qv2";
                 var paymentMethodId = await _db.PaymentModes.FirstOrDefaultAsync(x => x.Id == model.PaymentModeId);
@@ -73,7 +74,7 @@ namespace Gharbetti.ApiControllers
                     EndDate = endDate,
                     TransactionDate = tranDate,
                     RentPaid = model.RentPaid,
-                    RoomId = roomId.RoomId.Value,
+                    RoomId = roomDetail.Id,
                     TenantId = presentTenantId,
                     Total = totalAmount,
                     Remarks = model.Remarks,

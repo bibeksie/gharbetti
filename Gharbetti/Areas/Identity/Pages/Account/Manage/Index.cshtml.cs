@@ -133,7 +133,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
             [ValidateNever]
             public IEnumerable<SelectListItem> RoomList { get; set; }
 
-            public int? RoomId { get; set; }
+            public int? HouseRoomId { get; set; }
             public string? StayLength { get; set; }
 
 
@@ -152,7 +152,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
                                   join h in _db.Houses on hr.HouseId equals h.Id
                                   select new HouseRoomViewModel
                                   {
-                                      Id = r.Id,
+                                      Id = hr.Id,
                                       HouseId = h.Id,
                                       RoomId = r.Id,
                                       HouseName = h.Name,
@@ -165,7 +165,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber,
                 MobileNumber = userData.MobileNumber,
-                RoomId = userData.RoomId,
+                HouseRoomId = userData.HouseRoomId,
                 StayLength = userData.StayLength,
                 AddressLine1 = userData.AddressLine1,
                 AddressLine2 = userData.AddressLine2,
@@ -298,7 +298,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account.Manage
                 userData.MobileNumber = Input.MobileNumber;
                 userData.Identification = tickIdentification.IsNullOrEmpty() ? userData.Identification : tickIdentification ;
                 userData.PhotoId = tickPhotoFile.IsNullOrEmpty() ? userData.PhotoId : tickPhotoFile;
-                userData.RoomId = Input.RoomId;
+                userData.HouseRoomId = Input.HouseRoomId;
                 userData.StayLength = Input.StayLength;
 
                 _db.ApplicationUsers.Update(userData);

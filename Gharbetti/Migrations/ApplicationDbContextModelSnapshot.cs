@@ -661,6 +661,9 @@ namespace Gharbetti.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("HouseRoomId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Identification")
                         .HasColumnType("nvarchar(max)");
 
@@ -682,14 +685,8 @@ namespace Gharbetti.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoomId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("StayLength")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("RoomId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -882,17 +879,6 @@ namespace Gharbetti.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Gharbetti.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Gharbetti.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
                 });
 #pragma warning restore 612, 618
         }

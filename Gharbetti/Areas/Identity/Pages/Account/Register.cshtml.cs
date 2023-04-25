@@ -177,7 +177,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
             [ValidateNever]
             public IEnumerable<SelectListItem> RoomList { get; set; }
 
-            public int? RoomId { get; set; }
+            public int? HouseRoomId { get; set; }
             public string? StayLength { get; set; }
         }
 
@@ -199,7 +199,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                             join h in _db.Houses on hr.HouseId equals h.Id
                             select new HouseRoomViewModel
                             {
-                                Id = r.Id,
+                                Id = hr.Id,
                                 HouseId = h.Id,
                                 RoomId = r.Id,
                                 HouseName = h.Name,
@@ -266,7 +266,7 @@ namespace Gharbetti.Areas.Identity.Pages.Account
                 user.MobileNumber = Input.MobileNumber;
                 user.Identification = tickIdentification;
                 user.PhotoId = tickPhotoFile;
-                user.RoomId = Input.RoomId;
+                user.HouseRoomId = Input.HouseRoomId;
                 user.StayLength = Input.StayLength;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

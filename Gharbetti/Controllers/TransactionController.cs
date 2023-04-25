@@ -42,9 +42,10 @@ namespace Gharbetti.Controllers
 
             decimal rentAmount = 0;
             var userRoom = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Id == _userId);
-            if(userRoom != null && userRoom.RoomId != null)
+            if(userRoom != null && userRoom.HouseRoomId != null)
             {
-                var roomDetail = await _db.Rooms.FirstOrDefaultAsync(x => x.Id == userRoom.RoomId);
+                var houseRoom = await _db.HouseRooms.FirstOrDefaultAsync(x => x.Id == userRoom.HouseRoomId);
+                var roomDetail = await _db.Rooms.FirstOrDefaultAsync(x => x.Id == houseRoom.RoomId);
                 rentAmount = roomDetail is null ? 0 : roomDetail.RentAmount;
             }
 

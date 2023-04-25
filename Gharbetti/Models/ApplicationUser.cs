@@ -29,12 +29,10 @@ namespace Gharbetti.Models
         [Required]
         public string Country { get; set; }
         [ForeignKey("Room")]
-        public int? RoomId { get; set; }
+        public int? HouseRoomId { get; set; }
         public string? StayLength { get; set; }
 
         public string? ApproveRemarks { get; set; }
         public string? CustomerId { get; set; }
-        public Room Room { get; set; }
-
     }
 }

@@ -48,8 +48,8 @@ namespace Gharbetti.ApiControllers
                                    join userRole in _db.UserRoles on usr.Id equals userRole.UserId
                                    join role in _db.Roles on userRole.RoleId equals role.Id
                                    join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                   join room in _db.Rooms on ap.RoomId equals room.Id
-                                   join hr in _db.HouseRooms on room.Id equals hr.RoomId
+                                   join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id 
+                                   join room in _db.Rooms on hr.RoomId equals room.Id
                                    join h in _db.Houses on hr.HouseId equals h.Id
                                    where role.Name.ToLower() == "tenant"
                                    select new
@@ -74,8 +74,8 @@ namespace Gharbetti.ApiControllers
                                    join userRole in _db.UserRoles on usr.Id equals userRole.UserId
                                    join role in _db.Roles on userRole.RoleId equals role.Id
                                    join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                   join room in _db.Rooms on ap.RoomId equals room.Id
-                                   join hr in _db.HouseRooms on room.Id equals hr.RoomId
+                                   join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                   join room in _db.Rooms on hr.RoomId equals room.Id
                                    join h in _db.Houses on hr.HouseId equals h.Id
                                    where role.Name.ToLower() == "tenant" && h.Id == model.HouseId
                                    select new
@@ -156,8 +156,8 @@ namespace Gharbetti.ApiControllers
                                            join userRole in _db.UserRoles on usr.Id equals userRole.UserId
                                            join role in _db.Roles on userRole.RoleId equals role.Id
                                            join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                           join room in _db.Rooms on ap.RoomId equals room.Id
-                                           join hr in _db.HouseRooms on room.Id equals hr.RoomId
+                                           join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                           join room in _db.Rooms on hr.RoomId equals room.Id
                                            join h in _db.Houses on hr.HouseId equals h.Id
                                            where role.Name.ToLower() == "tenant"
                                            select new
@@ -182,8 +182,8 @@ namespace Gharbetti.ApiControllers
                                            join userRole in _db.UserRoles on usr.Id equals userRole.UserId
                                            join role in _db.Roles on userRole.RoleId equals role.Id
                                            join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                           join room in _db.Rooms on ap.RoomId equals room.Id
-                                           join hr in _db.HouseRooms on room.Id equals hr.RoomId
+                                           join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                           join room in _db.Rooms on hr.RoomId equals room.Id
                                            join h in _db.Houses on hr.HouseId equals h.Id
                                            where role.Name.ToLower() == "tenant" && h.Id == model.HouseId
                                            select new

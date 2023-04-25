@@ -142,8 +142,8 @@ namespace Gharbetti.ApiControllers
                     var transactionAllList = (from t in _db.Transactions
                                               join p in _db.PaymentModes on t.PaymentModeId equals p.Id
                                               join ap in _db.ApplicationUsers on t.TenantId.ToString() equals ap.Id
-                                              join r in _db.Rooms on ap.RoomId equals r.Id
-                                              join hr in _db.HouseRooms on r.Id equals hr.RoomId
+                                              join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                              join r in _db.Rooms on hr.RoomId equals r.Id
                                               join h in _db.Houses on hr.Id equals h.Id
                                               where t.TransactionDate.Date >= sdate && t.TransactionDate.Date <= edate
                                               select new
@@ -166,8 +166,8 @@ namespace Gharbetti.ApiControllers
                     var transactionAllList = (from t in _db.Transactions
                                               join p in _db.PaymentModes on t.PaymentModeId equals p.Id
                                               join ap in _db.ApplicationUsers on t.TenantId.ToString() equals ap.Id
-                                              join r in _db.Rooms on ap.RoomId equals r.Id
-                                              join hr in _db.HouseRooms on r.Id equals hr.RoomId
+                                              join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                              join r in _db.Rooms on hr.Id equals r.Id
                                               join h in _db.Houses on hr.Id equals h.Id
                                               where t.TransactionDate.Month == filterData.Month && t.TransactionDate.Year == t.TransactionDate.Year
                                               select new
@@ -193,8 +193,8 @@ namespace Gharbetti.ApiControllers
                     var transactionAllList = (from t in _db.Transactions
                                               join p in _db.PaymentModes on t.PaymentModeId equals p.Id
                                               join ap in _db.ApplicationUsers on t.TenantId.ToString() equals ap.Id
-                                              join r in _db.Rooms on ap.RoomId equals r.Id
-                                              join hr in _db.HouseRooms on r.Id equals hr.RoomId
+                                              join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                              join r in _db.Rooms on hr.RoomId equals r.Id
                                               join h in _db.Houses on hr.Id equals h.Id
                                               where t.TransactionDate.Year == t.TransactionDate.Year
                                               select new
@@ -231,8 +231,8 @@ namespace Gharbetti.ApiControllers
                                join userRole in _db.UserRoles on usr.Id equals userRole.UserId
                                join role in _db.Roles on userRole.RoleId equals role.Id 
                                join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                               join room in _db.Rooms on ap.RoomId equals room.Id
-                               join hr in _db.HouseRooms on room.Id equals hr.RoomId
+                               join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                               join room in _db.Rooms on hr.RoomId equals room.Id
                                join h in _db.Houses on hr.HouseId equals h.Id
                                where role.Name.ToLower() == "tenant"
                                select new RentPaidViewModel
