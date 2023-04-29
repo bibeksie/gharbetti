@@ -92,7 +92,7 @@ app.controller('expenseController', ['$scope', '$filter', '$compile', '$http', '
                 }
             }
             else if ($filter('lowercase')($scope.CurrentRole) == "tenant") {
-
+                $scope.FilterData.FilterType = 1;
                 $http.post("/api/Expense/GetTenantRange", $scope.FilterData).then(function (responseData) {
                     if (responseData.data.Status) {
                         $scope.TransactionList = responseData.data.Data;
@@ -170,6 +170,11 @@ app.controller('expenseController', ['$scope', '$filter', '$compile', '$http', '
                 $scope.IsVisible.TransactionReport = false;
                 $scope.IsVisible.RentReport = true;
             }
+        }
+
+        $scope.onChangeReportType = function () {
+            $scope.FilterData.FilterType = 0;
+            $scope.onChangeFilterType();
         }
     }]);
 

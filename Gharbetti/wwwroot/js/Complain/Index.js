@@ -12,9 +12,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             Id: 0,
             Reason: "",
             Response: "",
-            ComplainDate : "",
+            ComplainDate: "",
             Status: "",
-            StatusDisabled : false,
+            StatusDisabled: false,
         };
         $scope.dataTableOpt = {
             "aLengthMenu": [[10, 50, 100, -1], [10, 50, 100, 'All']],
@@ -26,7 +26,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         $scope.StatusList = [
             {
                 Name: "Open",
-                Value : 0
+                Value: 0
             },
             {
                 Name: "In-Progress",
@@ -45,10 +45,18 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         $scope.onClickAdd = function () {
 
             if ($scope.Complain.Id == "") {
-                data = $scope.Complain;
-                data.Status = data.Status.Value;
+                //data = angular.copy($scope.Complain);
+
+                var data = {};
+                data.Id = 0;
+                data.Reason = $scope.Complain.Reason;
+                data.Response = $scope.Complain.Response;
                 data.ComplainDate = new Date();
+                data.Status = $scope.Complain.Status.Value;
                 data.TenantId = "00000000-0000-0000-0000-000000000000";
+
+                //data.Status = data.Status.Value;
+                //data.ComplainDate = new Date();
 
                 $http.post("/api/Complain/Add", data).then(function (responsedata) {
                     debugger;
@@ -90,7 +98,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 Response: "",
                 ComplainDate: "",
                 Status: $scope.StatusList[0],
-                StatusDisabled : true,
+                StatusDisabled: true,
             };
 
             $('#addModal').modal('show');
@@ -140,7 +148,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                 }
             });
         }
-      
+
     }]);
 
 

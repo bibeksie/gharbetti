@@ -49,6 +49,7 @@ namespace Gharbetti.ApiControllers
                                                   TransactionDateString = t.TransactionDate.ToShortDateString(),
                                                   Remarks = t.Remarks,
                                                   PaymentMode = p.Name,
+                                                  RentPaid = t.RentPaid,
                                                   Total = t.Total
                                               }).ToList();
 
@@ -67,6 +68,7 @@ namespace Gharbetti.ApiControllers
                                                   TransactionDateString = t.TransactionDate.ToShortDateString(),
                                                   Remarks = t.Remarks,
                                                   PaymentMode = p.Name,
+                                                  RentPaid = t.RentPaid,
                                                   Total = t.Total
                                               }).ToList();
 
@@ -86,6 +88,7 @@ namespace Gharbetti.ApiControllers
                                                   TransactionDateString = t.TransactionDate.ToShortDateString(),
                                                   Remarks = t.Remarks,
                                                   PaymentMode = p.Name,
+                                                  RentPaid = t.RentPaid,
                                                   Total = t.Total
                                               }).ToList();
 
@@ -141,10 +144,10 @@ namespace Gharbetti.ApiControllers
 
                     var transactionAllList = (from t in _db.Transactions
                                               join p in _db.PaymentModes on t.PaymentModeId equals p.Id
-                                              join ap in _db.ApplicationUsers on t.TenantId.ToString() equals ap.Id
+                                              join ap in _db.ApplicationUsers on t.TenantId equals ap.Id
                                               join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
                                               join r in _db.Rooms on hr.RoomId equals r.Id
-                                              join h in _db.Houses on hr.Id equals h.Id
+                                              join h in _db.Houses on hr.HouseId equals h.Id
                                               where t.TransactionDate.Date >= sdate && t.TransactionDate.Date <= edate
                                               select new
                                               {
@@ -155,6 +158,7 @@ namespace Gharbetti.ApiControllers
                                                   Remarks = t.Remarks,
                                                   PaymentMode = p.Name,
                                                   Total = t.Total,
+                                                  RentPaid = t.RentPaid,
                                                   House = h.Name,
                                                   Room = r.RoomNo
                                               }).ToList();
@@ -165,10 +169,10 @@ namespace Gharbetti.ApiControllers
                 {
                     var transactionAllList = (from t in _db.Transactions
                                               join p in _db.PaymentModes on t.PaymentModeId equals p.Id
-                                              join ap in _db.ApplicationUsers on t.TenantId.ToString() equals ap.Id
+                                              join ap in _db.ApplicationUsers on t.TenantId equals ap.Id
                                               join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
-                                              join r in _db.Rooms on hr.Id equals r.Id
-                                              join h in _db.Houses on hr.Id equals h.Id
+                                              join r in _db.Rooms on hr.RoomId equals r.Id
+                                              join h in _db.Houses on hr.HouseId equals h.Id
                                               where t.TransactionDate.Month == filterData.Month && t.TransactionDate.Year == t.TransactionDate.Year
                                               select new
                                               {
@@ -178,6 +182,7 @@ namespace Gharbetti.ApiControllers
                                                   TransactionDateString = t.TransactionDate.ToShortDateString(),
                                                   Remarks = t.Remarks,
                                                   PaymentMode = p.Name,
+                                                  RentPaid = t.RentPaid,
                                                   Total = t.Total,
                                                   House = h.Name,
                                                   Room = r.RoomNo
@@ -192,10 +197,10 @@ namespace Gharbetti.ApiControllers
                 {
                     var transactionAllList = (from t in _db.Transactions
                                               join p in _db.PaymentModes on t.PaymentModeId equals p.Id
-                                              join ap in _db.ApplicationUsers on t.TenantId.ToString() equals ap.Id
+                                              join ap in _db.ApplicationUsers on t.TenantId equals ap.Id
                                               join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
                                               join r in _db.Rooms on hr.RoomId equals r.Id
-                                              join h in _db.Houses on hr.Id equals h.Id
+                                              join h in _db.Houses on hr.HouseId equals h.Id
                                               where t.TransactionDate.Year == t.TransactionDate.Year
                                               select new
                                               {
@@ -205,6 +210,7 @@ namespace Gharbetti.ApiControllers
                                                   TransactionDateString = t.TransactionDate.ToShortDateString(),
                                                   Remarks = t.Remarks,
                                                   PaymentMode = p.Name,
+                                                  RentPaid = t.RentPaid,
                                                   Total = t.Total,
                                                   House = h.Name,
                                                   Room = r.RoomNo
@@ -248,11 +254,11 @@ namespace Gharbetti.ApiControllers
                                }).ToList();
   
 
-                var allSameMonthTransaction = _db.Transactions.Where(x => allUser.Select(z => z.UserId).Contains(x.TenantId.ToString()) && x.TransactionDate.Month == filterData.Month);
+                var allSameMonthTransaction = _db.Transactions.Where(x => allUser.Select(z => z.UserId).Contains(x.TenantId) && x.TransactionDate.Month == filterData.Month);
 
                 foreach (var item in allUser)
                 {
-                    var matchTransaction = allSameMonthTransaction.FirstOrDefault(x => x.TenantId.ToString() == item.UserId);
+                    var matchTransaction = allSameMonthTransaction.FirstOrDefault(x => x.TenantId == item.UserId);
                     if (matchTransaction != null)
                     {
                         item.Status = "Paid";

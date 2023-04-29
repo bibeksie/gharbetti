@@ -54,10 +54,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
         $scope.onClickAdd = function () {
 
             if ($scope.CleanSchedule.Id == "") {
-                data = $scope.CleanSchedule;
+                data = angular.copy($scope.CleanSchedule);
                 data.StartDate = new Date();
                 data.EndDate = new Date();
-
                 data.TenantId = data.TenantId.Id;
                 data.CreatedBy = $scope.emptyGuid;
 
@@ -76,10 +75,9 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
             }
             else {
 
-                data = $scope.CleanSchedule;
+                data = angular.copy($scope.CleanSchedule);
                 data.StartDate = new Date();
                 data.EndDate = new Date();
-                data.TenantId = data.TenantId.Id;
                 data.CreatedBy = $scope.emptyGuid;
                 data.TenantId = data.TenantId.Id;
 
@@ -87,7 +85,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
                     debugger;
                     console.log(responsedata.data);
                     if (responsedata.data.Status) {
-                        alert(result.Message);
+                        alert(responsedata.data.Message);
                         location.reload();
                     }
                     else {

@@ -19,7 +19,7 @@
             <div ng-show="IsVisible.Admin">
                 <div class="col-md-2 form-group">
                     <label class="col-form-label">Report Type:</label>
-                    <select class="form-control" ng-model="ReportType">
+                    <select class="form-control" ng-model="ReportType" ng-change="onChangeReportType()">
                         <option value="0">Transaction Report</option>
                         <option value="1">Status Report</option>
                     </select>
@@ -105,7 +105,7 @@
                             <td>{{ data.RentPaid }}</td>
                             <td>{{ data.Total }}</td>
                             <td>
-                                <button type="button" class="btn btn-primary" ng-click="ShowExpense(data.Id)">Edit</button>
+                                <button type="button" class="btn btn-primary" ng-click="ShowExpense(data.Id)">View</button>
                             </td>
                         </tr>
                     </tbody>
@@ -142,7 +142,7 @@
                                 <td>{{ data.RentPaid }}</td>
                                 <td>{{ data.Total }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" ng-click="ShowExpense(data.Id)">Edit</button>
+                                    <button type="button" class="btn btn-primary" ng-click="ShowExpense(data.Id)">View</button>
                                 </td>
                             </tr>
                         </tbody>

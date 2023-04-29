@@ -38,6 +38,11 @@ namespace Gharbetti.Controllers
 
             foreach (var item in paymentIntents.Data)
             {
+                if(item.Status != "succeeded" || item.Description == "test")
+                {
+                    continue;
+                }
+
                 var tenantData = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.CustomerId ==  item.CustomerId);
                 var transactionData = await _db.Transactions.FirstOrDefaultAsync(x => x.StripePaymentId == item.Id);
 

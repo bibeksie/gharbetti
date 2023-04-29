@@ -42,7 +42,14 @@ namespace Gharbetti.ApiControllers
                     return Ok(new { Status = false, Message = "Error while getting room" });
                 }
 
-                var roomDetail = await _db.Rooms.FirstOrDefaultAsync(x => x.Id == roomId.HouseRoomId);
+                var houseRoom = await _db.HouseRooms.FirstOrDefaultAsync(x => x.Id == roomId.HouseRoomId);
+                if (houseRoom == null)
+                {
+                    return Ok(new { Status = false, Message = "Error while getting house room" });
+                }
+
+                var roomDetail = await _db.Rooms.FirstOrDefaultAsync(x => x.Id == houseRoom.RoomId);
+
                 var totalAmount = model.RentPaid + model.TransactionDetails.Sum(x => x.Amount);
                 StripeConfiguration.ApiKey = "sk_test_51MrMYfG57wLeiTAQci6zNIOYQS40rPL4IfQawYqzWZNfTdPDA3enyrfVLFrQ8LqNHrTiE0eH8lMYpVJaJRmmwNJU00uqBJ2Qv2";
                 var paymentMethodId = await _db.PaymentModes.FirstOrDefaultAsync(x => x.Id == model.PaymentModeId);

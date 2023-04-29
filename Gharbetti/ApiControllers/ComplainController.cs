@@ -1,5 +1,6 @@
 ﻿using Gharbetti.Data;
 using Gharbetti.Models;
+using Gharbetti.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -23,7 +24,7 @@ namespace Gharbetti.ApiControllers
 
         [Route("Add")]
         [HttpPost]
-        public IActionResult Add([FromBody] Complain model)
+        public IActionResult Add([FromBody] ComplainViewModel model)
         {
             _db.Complains.Add(new Complain
             {
@@ -35,7 +36,7 @@ namespace Gharbetti.ApiControllers
             });
             _db.SaveChanges();
 
-            return Ok(new { Data = model, Status = true });
+            return Ok(new { Data = model, Status = true , Message = "Data Added Sucessfully" });
         }
 
         [HttpGet]
@@ -57,7 +58,7 @@ namespace Gharbetti.ApiControllers
 
         [HttpPost]
         [Route("Edit")]
-        public IActionResult Edit([FromBody] Complain model)
+        public IActionResult Edit([FromBody] ComplainViewModel model)
         {
 
             var editData = _db.Complains.FirstOrDefault(x => x.Id == model.Id);
@@ -91,7 +92,7 @@ namespace Gharbetti.ApiControllers
                 {
                     return Ok(new { Status = false, Message = "Landlord response complain cannot be delete!!!" });
                 }
-                if (editData.Status != 1)
+                if (editData.Status != 0)
                 {
                     return Ok(new { Status = false, Message = "Change Status cannot be deleted!!!" });
                 }

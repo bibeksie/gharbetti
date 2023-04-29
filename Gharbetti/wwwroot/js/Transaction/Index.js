@@ -23,7 +23,7 @@ app.controller('transactionController', ['$scope', '$filter', '$compile', '$http
             EndDateString: "",
             RoomId: 0,
             RentAmount: 0,
-            RentPaid : "",
+            RentPaid: "",
             Remarks: "",
             PaymentModeId: {},
             TransactionDetails: [{
@@ -45,21 +45,21 @@ app.controller('transactionController', ['$scope', '$filter', '$compile', '$http
         };
 
 
-        $scope.init = function (transctionList,rentAmount) {
+        $scope.init = function (transctionList, rentAmount) {
 
             $scope.TransactionList.records = transctionList;
             $scope.GetExpenseType();
             $scope.GetPaymentMode();
-            $scope.RentAmount =  rentAmount,
+            $scope.RentAmount = rentAmount,
 
 
-            $('#modalStartDate').datepicker({
-                format: 'mm/dd/yyyy',
-                autoclose: true,
-                todayHighlight: true,
-                todayBtn: true
+                $('#modalStartDate').datepicker({
+                    format: 'mm/dd/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                    todayBtn: true
 
-            });
+                });
             $('#modalEndDate').datepicker({
                 format: 'mm/dd/yyyy',
                 autoclose: true,
@@ -137,8 +137,8 @@ app.controller('transactionController', ['$scope', '$filter', '$compile', '$http
                 RoomId: 0,
                 RentPaid: 0,
                 Remarks: "",
-                PaymentModeId: {}
-,
+                RentAmount: $scope.RentAmount,
+                PaymentModeId: {},
                 TransactionDetails: [{
                     Id: 0,
                     TransactionId: 0,
@@ -229,7 +229,7 @@ app.controller('transactionController', ['$scope', '$filter', '$compile', '$http
             });
         }
 
-        $scope.GetPaymentMode= function () {
+        $scope.GetPaymentMode = function () {
             $http.get('/api/PaymentMode').then(function (responsedata) {
                 console.log(responsedata.data);
                 if (responsedata.data) {

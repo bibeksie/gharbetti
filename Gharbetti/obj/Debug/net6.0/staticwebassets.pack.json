@@ -441,6 +441,14 @@
       "PackagePath": "staticwebassets\\uploads\\638165026744245016.png"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638180515491586922.jpg",
+      "PackagePath": "staticwebassets\\uploads\\638180515491586922.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\uploads\\638180515491680362.png",
+      "PackagePath": "staticwebassets\\uploads\\638180515491680362.png"
+    },
+    {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Gharbetti.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
