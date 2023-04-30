@@ -125,6 +125,10 @@
       "PackagePath": "staticwebassets\\js\\Transaction\\Index.js"
     },
     {
+      "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\UserView\\Index.js",
+      "PackagePath": "staticwebassets\\js\\UserView\\Index.js"
+    },
+    {
       "Id": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\datepicker\\bootstrap-datepicker.min.js",
       "PackagePath": "staticwebassets\\js\\datepicker\\bootstrap-datepicker.min.js"
     },

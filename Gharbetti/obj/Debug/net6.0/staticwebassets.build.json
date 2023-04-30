@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6v0Py06g8v0L5ut7BHZ+R9+q1xMxmpeqZXIzW+MTbr8=",
+  "Hash": "r+aAZQThQqHSudCuctLj93OcYfVXcQnHSO9ffP8Dgss=",
   "Source": "Gharbetti",
   "BasePath": "_content/Gharbetti",
   "Mode": "Default",
@@ -1647,6 +1647,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\uiselect\\select.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\js\\UserView\\Index.js",
+      "SourceId": "Gharbetti",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\",
+      "BasePath": "_content/Gharbetti",
+      "RelativePath": "js/UserView/Index.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\UserView\\Index.js"
     },
     {
       "Identity": "C:\\Users\\user\\source\\repos\\Gharbetti\\Gharbetti\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

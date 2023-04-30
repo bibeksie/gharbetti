@@ -146,7 +146,7 @@ app.controller('formController', ['$scope', '$filter', '$compile', '$http', '$ro
 
         $scope.GetTenantList = function () {
             $scope.TenantList = [];
-            $http.get("/api/User/gettenant").then(function (responsedata) {
+            $http.get("/api/User/gettenantsamehouse").then(function (responsedata) {
                 if (responsedata.data.Status) {
                     $scope.TenantList = responsedata.data.Data;
                 }

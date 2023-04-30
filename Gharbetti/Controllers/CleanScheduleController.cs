@@ -29,6 +29,7 @@ namespace Gharbetti.Controllers
                 x.StartDate,
                 x.EndDate,
             }).ToList();
+
             var cleanScheduleList = (from cs in allCleanScheduleList
                                      join us in _db.ApplicationUsers on cs.TenantId equals us.Id
                                      join uss in _db.ApplicationUsers on cs.CreatedBy equals uss.Id

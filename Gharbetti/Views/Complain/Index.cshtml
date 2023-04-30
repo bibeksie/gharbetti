@@ -27,6 +27,8 @@
                    ui-jq="dataTable" ui-options="dataTableOpt">
                 <thead class="thead-dark">
                     <tr>
+                        <th>Tenant</th>
+                        <th>House & Room</th>
                         <th>Complain Date</th>
                         <th>Complain</th>
                         <th>Response</th>
@@ -36,6 +38,8 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="data in ComplainList.records">
+                        <td>{{data.TenantName}}</td>
+                        <td>{{data.House}} => {{data.Room}}</td>
                         <td>{{ data.ComplainDate | date:'MMMM d y, h:mm:ss a'}}</td>
                         <td>{{ data.Reason }}</td>
                         <td>{{ data.Response }}</td>

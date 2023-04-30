@@ -23,12 +23,49 @@ namespace Gharbetti.Controllers
         {
             if (this.User.IsInRole("tenant"))
             {
-                var complainList = _db.Complains.Where(x => x.TenantId == _userId).ToList();
+                var complainList = (from c in _db.Complains
+                                    join ap in _db.ApplicationUsers on c.TenantId equals ap.Id
+                                    join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                    join r in _db.Rooms on hr.RoomId equals r.Id
+                                    join h in _db.Houses on hr.HouseId equals h.Id
+                                    where c.TenantId == _userId
+                                    select new
+                                    {
+                                        c.Id,
+                                        TenantName = ap.FirstName,
+                                        TenantId = ap.LastName,
+                                        c.Reason,
+                                        c.Response,
+                                        c.ComplainDate,
+                                        c.Status,
+                                        House = h.Name,
+                                        Room = r.RoomNo
+                                    }).ToList();
+
                 ViewData["Complain"] = complainList;
             }
             else if (this.User.IsInRole("admin"))
             {
-                var complainList = _db.Complains.OrderByDescending(x => x.ComplainDate).ToList();
+                var complainList = (from c in _db.Complains
+                                    join ap in _db.ApplicationUsers on c.TenantId equals ap.Id
+                                    join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                                    join r in _db.Rooms on hr.RoomId equals r.Id
+                                    join h in _db.Houses on hr.HouseId equals h.Id
+                                    orderby c.ComplainDate descending
+                                    select new
+                                    {
+                                        c.Id,
+                                        TenantName = ap.FirstName,
+                                        TenantId = ap.LastName,
+                                        c.Reason,
+                                        c.Response,
+                                        c.ComplainDate,
+                                        c.Status,
+                                        House = h.Name,
+                                        Room = r.RoomNo
+                                    }).ToList();
+                                        
+                    //.OrderByDescending(x => x.ComplainDate).ToList();
                 ViewData["Complain"] = complainList;
             }
 
