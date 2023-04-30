@@ -30,7 +30,7 @@ namespace Gharbetti.ApiControllers
             var endDate = DateTime.Parse(model.EndDateString);
             _db.CleanSchedules.Add(new CleanSchedule
             {
-                CreatedBy =Guid.Parse(_userId),
+                CreatedBy =_userId,
                 StartDate = startDate,
                 EndDate = endDate,
                 Remarks = model.Remarks,

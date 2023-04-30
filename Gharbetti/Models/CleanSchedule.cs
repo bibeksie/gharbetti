@@ -11,7 +11,7 @@ namespace Gharbetti.Models
         public string TenantId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Guid CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public string? Remarks { get; set; }
         public ApplicationUser User { get; set; }
     }
