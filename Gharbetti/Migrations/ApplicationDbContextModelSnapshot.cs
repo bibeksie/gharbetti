@@ -194,9 +194,8 @@ namespace Gharbetti.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HouseId")
-                        .IsRequired()
-                        .HasColumnType("int");
+                    b.Property<bool>("IsAll")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("PostedDate")
                         .HasColumnType("datetime2");
@@ -206,8 +205,6 @@ namespace Gharbetti.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HouseId");
 
                     b.ToTable("Message");
                 });
@@ -730,17 +727,6 @@ namespace Gharbetti.Migrations
                     b.Navigation("House");
 
                     b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("Gharbetti.Models.Message", b =>
-                {
-                    b.HasOne("Gharbetti.Models.House", "House")
-                        .WithMany()
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("House");
                 });
 
             modelBuilder.Entity("Gharbetti.Models.Room", b =>

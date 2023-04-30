@@ -31,8 +31,8 @@ namespace Gharbetti.Controllers
         public async Task<IActionResult> Index()
         {
             var messageList = (from m in _db.Message
-                               join h in _db.Houses on m.HouseId equals h.Id into houses
-                               from hr in houses.DefaultIfEmpty()
+                         //      join h in _db.Houses on m.HouseId equals h.Id into houses
+                           //    from hr in houses.DefaultIfEmpty()
                                select new
                                {
                                    m.Id,
@@ -40,7 +40,7 @@ namespace Gharbetti.Controllers
                                    m.Body,
                                    PostedDate = m.PostedDate.ToShortDateString(),
                                    PostDate = m.PostedDate,
-                                   House = m.HouseId == 0 ? "All" : hr.Name
+                             //      House = m.HouseId == 0 ? "All" : hr.Name
                                }).OrderByDescending(x => x.PostDate).ToList();
 
             ViewData["Message"] = messageList;

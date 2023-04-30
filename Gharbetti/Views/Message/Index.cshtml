@@ -4,6 +4,9 @@
 
 
 <script src="~/js/Angularjs/angular.min.js"></script>
+<script src="~/js/Angularjs/angular-sanitize.min.js"></script>
+<script src="~/js/uiselect/select.min.js"></script>
+<link rel="stylesheet" href="~/css/uiselect/select.min.css">
 <script src="~/js/DataTable/ui-bootstrap-tpls.min.js"></script>
 <script src="~/js/Angularjs/angular-ui-utils.min.js"></script>
 <script src="~/js/DataTable/dataTables.min.js"></script>
@@ -52,11 +55,30 @@
                     <h5 class="modal-title">Add Floor</h5>
                 </div>
                 <div class="modal-body">
+
+
+                    <div class="g-col-6 g-col-md-4">
+                        <label class="col-form-label">Send Type:</label>
+                         <select class="form-control" ng-model="Message.IsAll" ng-change="onChangeSendType()">
+                             <option value="0">All</option>
+                             <option value="1">Individual</option>
+                        </select>
+
+                    </div>
+
                     <div class="g-col-6 g-col-md-4">
                         <label class="col-form-label">House:</label>
-                        <select name="Reason" class="form-control" ng-model="Message.HouseId"
-                                ng-options="fl.Name for fl in HouseList">
-                        </select>
+     
+
+                        <ui-select multiple theme="bootstrap" ng-model="Multiple.tenants" ng-disabled="DisableMultipleSelect" close-on-select="false" style="width: 300px;">
+                            <ui-select-match placeholder="Select a Tenant">
+                                {{$item.Tenant}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="p1 in (HouseList | filter: $select.search) track by p1.Id">
+                                HR : {{p1.House}}=> {{p1.RoomNo}}
+                                <span ng-bind="p1.Tenant"></span>
+                            </ui-select-choices>
+
                     </div>
 
                     <div>

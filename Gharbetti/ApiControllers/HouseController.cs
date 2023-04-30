@@ -216,5 +216,29 @@ namespace Gharbetti.ApiControllers
             }
 
         }
+
+
+        [HttpGet]
+        [Route("GetHousesWithUser")]
+        public IActionResult GetHousesWithUser()
+        {
+
+            var houseList = (from ap in _db.ApplicationUsers
+                             join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                             join r in _db.Rooms on hr.RoomId equals r.Id
+                             join h in _db.Houses on hr.HouseId equals h.Id
+                             join ur in _db.UserRoles on ap.Id equals ur.UserId
+                             join ro in _db.Roles on ur.RoleId equals ro.Id
+                             where ro.Name == StaticDetail.Role_Tenant
+                             select new
+                             {
+                                 Id = ap.Id,
+                                 House = h.Name,
+                                 Room = r.RoomNo,
+                                 Tenant = ap.FirstName + " " + ap.LastName,
+                             }).ToList();
+
+            return Ok(new { Status = true, Message = "Data Load Sucessfully", Data = houseList });
+        }
     }
 }

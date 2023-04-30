@@ -37,18 +37,18 @@ namespace Gharbetti.ApiControllers
                     Subject = model.Subject,
                     Body = model.Body,
                     PostedDate = DateTime.Now,
-                    HouseId = model.HouseId == 0? null : model.HouseId,
+                    IsAll = model.IsAll
                 });
 
                 _db.SaveChanges();
 
-                if (model.HouseId == 0)
+                if (model.IsAll)
                 {
                     var allUser = (from usr in _db.Users
                                    join userRole in _db.UserRoles on usr.Id equals userRole.UserId
                                    join role in _db.Roles on userRole.RoleId equals role.Id
                                    join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                   join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id 
+                                   join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
                                    join room in _db.Rooms on hr.RoomId equals room.Id
                                    join h in _db.Houses on hr.HouseId equals h.Id
                                    where role.Name.ToLower() == "tenant"
@@ -70,25 +70,25 @@ namespace Gharbetti.ApiControllers
                 }
                 else
                 {
-                    var allUser = (from usr in _db.Users
-                                   join userRole in _db.UserRoles on usr.Id equals userRole.UserId
-                                   join role in _db.Roles on userRole.RoleId equals role.Id
-                                   join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                   join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
-                                   join room in _db.Rooms on hr.RoomId equals room.Id
-                                   join h in _db.Houses on hr.HouseId equals h.Id
-                                   where role.Name.ToLower() == "tenant" && h.Id == model.HouseId
-                                   select new
-                                   {
-                                       UserId = usr.Id,
-                                   }).ToList();
+                    //var allUser = (from usr in _db.Users
+                    //               join userRole in _db.UserRoles on usr.Id equals userRole.UserId
+                    //               join role in _db.Roles on userRole.RoleId equals role.Id
+                    //               join ap in _db.ApplicationUsers on usr.Id equals ap.Id
+                    //               join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                    //               join room in _db.Rooms on hr.RoomId equals room.Id
+                    //               join h in _db.Houses on hr.HouseId equals h.Id
+                    //               where role.Name.ToLower() == "tenant" && h.Id == model.HouseId
+                    //               select new
+                    //               {
+                    //                   UserId = usr.Id,
+                    //               }).ToList();
 
-                    foreach (var item in allUser)
+                    foreach (var item in model.Tenant)
                     {
                         await _db.TenantMessages.AddAsync(new TenantMessage
                         {
                             MessageId = addedMessage.Entity.Id,
-                            TenantId = item.UserId,
+                            TenantId = item.Id,
                             Status = 1
                         });
                     }
@@ -97,7 +97,7 @@ namespace Gharbetti.ApiControllers
                 }
                 await _db.SaveChangesAsync();
                 dbTran.Commit();
-                return Ok(new { Data = model, Status = true, Message = "House saved Sucessfully!!!" });
+                return Ok(new { Data = model, Status = true, Message = "Message saved Sucessfully!!!" });
             }
             catch (Exception)
             {
@@ -109,18 +109,39 @@ namespace Gharbetti.ApiControllers
 
         [HttpGet]
         [Route("Edit")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var editData = _db.Message.FirstOrDefault(x => x.Id == id);
+            var editData = await _db.Message.FirstOrDefaultAsync(x => x.Id == id);
 
             if (editData == null)
             {
                 return Ok(new { Status = false, Message = "Data Not Found!!!" });
             }
 
-            editData.HouseId = editData.HouseId ?? 0;
+            var editViewData = new MessageViewModel
+            {
+                Id = editData.Id,
+                IsAll = editData.IsAll,
+                Body = editData.Body,
+                PostedDate = editData.PostedDate,
+                Subject = editData.Subject,
+            };
 
-            return Ok(new { Data = editData, Status = true });
+            if (!editData.IsAll)
+            {
+                var allMessageTenant = _db.TenantMessages.Where(x => x.MessageId == editData.Id).Select(x => new MessageTenantViewModel
+                {
+                    Id = x.TenantId
+                }).ToList();
+
+                editViewData.Tenant = allMessageTenant;
+            }
+            else
+            {
+                editViewData.Tenant = new List<MessageTenantViewModel>();
+            }
+
+            return Ok(new { Data = editViewData, Status = true });
 
         }
 
@@ -134,23 +155,23 @@ namespace Gharbetti.ApiControllers
                 try
                 {
                     var savedEditData = await _db.Message.FirstOrDefaultAsync(x => x.Id == model.Id);
-                    var houseId = savedEditData?.HouseId;
                     if (savedEditData != null)
                     {
                         savedEditData.Subject = model.Subject;
                         savedEditData.Body = model.Body;
-                        savedEditData.HouseId = model.HouseId == 0? null : model.HouseId;
+                        savedEditData.IsAll = model.IsAll;
 
                         _db.Message.Update(savedEditData);
 
-                        if (houseId != model.HouseId)
-                        {
-                            var allHouseList = await _db.TenantMessages.Where(x => x.MessageId == model.Id).ToListAsync();
 
+                        var allHouseList = await _db.TenantMessages.Where(x => x.MessageId == model.Id).ToListAsync();
+                        if (allHouseList.Count > 0)
+                        {
                             _db.TenantMessages.RemoveRange(allHouseList);
                         }
 
-                        if (model.HouseId == 0)
+
+                        if (model.IsAll)
                         {
                             var allUser = (from usr in _db.Users
                                            join userRole in _db.UserRoles on usr.Id equals userRole.UserId
@@ -178,25 +199,25 @@ namespace Gharbetti.ApiControllers
                         }
                         else
                         {
-                            var allUser = (from usr in _db.Users
-                                           join userRole in _db.UserRoles on usr.Id equals userRole.UserId
-                                           join role in _db.Roles on userRole.RoleId equals role.Id
-                                           join ap in _db.ApplicationUsers on usr.Id equals ap.Id
-                                           join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
-                                           join room in _db.Rooms on hr.RoomId equals room.Id
-                                           join h in _db.Houses on hr.HouseId equals h.Id
-                                           where role.Name.ToLower() == "tenant" && h.Id == model.HouseId
-                                           select new
-                                           {
-                                               UserId = usr.Id,
-                                           }).ToList();
+                            //var allUser = (from usr in _db.Users
+                            //join userRole in _db.UserRoles on usr.Id equals userRole.UserId
+                            //join role in _db.Roles on userRole.RoleId equals role.Id
+                            //join ap in _db.ApplicationUsers on usr.Id equals ap.Id
+                            //join hr in _db.HouseRooms on ap.HouseRoomId equals hr.Id
+                            //join room in _db.Rooms on hr.RoomId equals room.Id
+                            //join h in _db.Houses on hr.HouseId equals h.Id
+                            //where role.Name.ToLower() == "tenant" && h.Id == model.HouseId
+                            //select new
+                            //{
+                            //    UserId = usr.Id,
+                            //}).ToList();
 
-                            foreach (var item in allUser)
+                            foreach (var item in model.Tenant)
                             {
                                 await _db.TenantMessages.AddAsync(new TenantMessage
                                 {
                                     MessageId = savedEditData.Id,
-                                    TenantId = item.UserId,
+                                    TenantId = item.Id,
                                     Status = 1
                                 });
                             }
@@ -283,7 +304,7 @@ namespace Gharbetti.ApiControllers
                                        mess.PostedDate
                                    }).OrderByDescending(x => x.PostedDate).ToList();
 
-                return Ok(new {Status = true, Message= "Data Loaded Sucessfully" ,  Data = messageList });
+                return Ok(new { Status = true, Message = "Data Loaded Sucessfully", Data = messageList });
             }
             catch (Exception ex)
             {

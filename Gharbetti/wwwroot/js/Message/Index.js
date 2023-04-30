@@ -1,4 +1,4 @@
-﻿var app = angular.module('messageIndex', ['ui.bootstrap', 'ui.utils']);
+﻿var app = angular.module('messageIndex', ['ui.select', 'ngSanitize', 'ui.bootstrap', 'ui.utils']);
 
 
 app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '$rootScope', '$timeout', '$q', '$log', '$window',
@@ -8,14 +8,16 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
             Id: 0,
             Subject: "",
             Body: "",
-            HouseId: {},
+            IsAll : "0",
+            Tenant:  []
         };
 
-        $scope.HouseList = [{
-            Id: 0,
-            Name: "All"
+        $scope.HouseList = [];
 
-        }];
+        $scope.Multiple = {
+            tenants: []
+        }
+
         $scope.MessageList = {
             records: [],
         };
@@ -27,6 +29,8 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
             ],
         };
 
+        $scope.DisableMultipleSelect = true;
+
 
         $scope.init = function (messageList) {
             $scope.MessageList.records = messageList;
@@ -36,9 +40,16 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
         $scope.onClickAdd = function () {
 
             data = angular.copy($scope.Message);
-            data.HouseId = data.HouseId.HouseId;
 
             if (data.Id == "") {
+
+                if ($scope.Message.IsAll == 1) {
+                    data.IsAll = false;
+                    data.Tenant = $scope.Multiple.tenants;
+                }
+                else {
+                    data.IsAll = true;
+                }
 
                 $http.post("/api/Message/Add", data).then(function (responsedata) {
                     debugger;
@@ -53,6 +64,15 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
                 });
             }
             else {
+
+                if ($scope.Message.IsAll == 1) {
+                    data.IsAll = false;
+                    data.Tenant = $scope.Multiple.tenants;
+                }
+                else {
+                    data.IsAll = true;
+                }
+
                 $http.post('/api/Message/Edit', data).then(function (responsedata) {
                     debugger;
                     console.log(responsedata.data);
@@ -75,7 +95,8 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
                 Id: 0,
                 Subject: "",
                 Body: "",
-                HouseId: $scope.HouseList[0],
+                IsAll: "0",
+                Tenant : [],
             };
 
             $('#addModal').modal('show');
@@ -105,7 +126,14 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
                 if (responsedata.data) {
                     var data = responsedata.data.Data;
                     $scope.Message = data;
-                    $scope.Message.HouseId = $scope.HouseList.find(x => x.Id == $scope.Message.HouseId);
+                    if (data.IsAll) {
+                        $scope.Message.IsAll = "0";
+                    }
+                    else {
+                        $scope.Message.IsAll = "1";
+                        $scope.Multiple.tenants = data.Tenant;
+                        $scope.DisableMultipleSelect = false;
+                    }
 
                     $('#addModal').modal('show');
                 }
@@ -136,7 +164,7 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
 
 
         $scope.GetHouse = function () {
-            $http.get('/api/House/GetHouses').then(function (responsedata) {
+            $http.get('/api/House/GetHousesWithUser').then(function (responsedata) {
                 if (responsedata.data.Status) {
                     for (var i = 0; i < responsedata.data.Data.length; i++) {
                         $scope.HouseList.push(responsedata.data.Data[i]);
@@ -148,6 +176,14 @@ app.controller('messageController', ['$scope', '$filter', '$compile', '$http', '
             });
         }
 
+        $scope.onChangeSendType = function () {
+            if ($scope.Message.IsAll == 0) {
+                $scope.DisableMultipleSelect = true;
+            }
+            else {
+                $scope.DisableMultipleSelect = false;
+            }
+        }
 
     }]);
 

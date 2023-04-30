@@ -8,10 +8,9 @@ namespace Gharbetti.Models
         [Key]
         public int Id { get; set; }
         [ForeignKey("House")]
-        public int? HouseId { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime PostedDate { get; set; }
-        public House House { get; set; }
+        public bool IsAll { get; set; }
     }
 }
