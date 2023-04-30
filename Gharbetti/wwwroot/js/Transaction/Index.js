@@ -89,6 +89,8 @@ app.controller('transactionController', ['$scope', '$filter', '$compile', '$http
 
                 angular.forEach(data.TransactionDetails, function (value) {
                     value.ExpenseId = value.ExpenseId.Id;
+                    value.Id = 0;
+                    value.TransactionId = 0;
                 });
 
                 $http.post("/api/transaction/Add", data).then(function (responsedata) {
