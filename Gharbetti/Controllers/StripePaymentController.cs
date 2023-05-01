@@ -43,7 +43,8 @@ namespace Gharbetti.Controllers
                     continue;
                 }
 
-                var tenantData = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.CustomerId ==  item.CustomerId);
+                
+                var tenantData = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.CustomerId ==  item.CustomerId && item.CustomerId != null);
                 var transactionData = await _db.Transactions.FirstOrDefaultAsync(x => x.StripePaymentId == item.Id);
 
                 viewList.Add(new StripePaymentList

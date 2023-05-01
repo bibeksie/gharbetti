@@ -48,7 +48,6 @@ namespace Gharbetti.ApiControllers
                 {
                     Name = applicationUser.FirstName + " " + applicationUser.LastName,
                     Email = user.Email,
-            
                 };
 
                 var service = new CustomerService();
@@ -56,7 +55,7 @@ namespace Gharbetti.ApiControllers
 
                 applicationUser.CustomerId = customer.Id;
                 _db.ApplicationUsers.Update(applicationUser);
-
+                _db.SaveChanges();
                 dbTran.Commit();
                 return Ok(new { Status = true, Message = "Role Changed Sucessfully and Customer Created" });
             }
