@@ -50,7 +50,7 @@ namespace Gharbetti.Controllers
                 viewList.Add(new StripePaymentList
                 {
                     Tenant = tenantData == null ? "Not Found" : tenantData.FirstName + " " + tenantData.LastName,
-                    Amount = item.Amount.ToString("0.00"),
+                    Amount = (item.Amount / 100).ToString("0.00"),
                     StartDate = transactionData == null ? "Not Found" : transactionData.StartDate.ToShortDateString(),
                     EndDate = transactionData == null ? "Not Found" : transactionData.EndDate.ToShortDateString(),
                     TransactionDate = transactionData == null ? "Not Found" : transactionData.TransactionDate.ToShortDateString(),
